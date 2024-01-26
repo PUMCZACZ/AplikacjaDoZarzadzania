@@ -3,6 +3,7 @@
 namespace App\Domains\Order\Controllers\Api;
 
 use App\Domains\Order\Models\Order;
+use App\Domains\Order\Requests\ApiOrderRequest;
 use App\Domains\Order\Transformers\OrderTransformer;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
@@ -10,7 +11,7 @@ use Illuminate\Http\Request;
 
 class ApiOrderController extends Controller
 {
-    public function orders(Request $request)
+    public function getOrders(ApiOrderRequest $request)
     {
         $currentDate = Carbon::now()->toDateString();
         $req = $request->parameter;

@@ -6,7 +6,7 @@ use App\Domains\Order\Enums\OrderTypeEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Carbon;
 
-class OrderRequest extends FormRequest
+class ApiOrderRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -16,13 +16,7 @@ class OrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'client_id' => ['required','integer','exists:clients,id'],
-            'order_name' => ['required','string','max:255'],
-            'order_type' => ['required', OrderTypeEnum::toValidationRule()],
-            'quantity' => ['required','numeric','min:0.01'],
-            'price' => ['required','numeric','min:0.01'],
-            'deadline' => ['required','date'],
-            'unit_id' => ['required','exists:units,id']
+            'parameter' => ['required', 'in:1,3,7,all'],
         ];
     }
 }

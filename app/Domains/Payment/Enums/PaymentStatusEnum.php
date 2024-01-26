@@ -10,8 +10,8 @@ enum PaymentStatusEnum: string
     public function translate(): string
     {
         return match ($this) {
-          self::ISSUED => 'nieopłacona',
-          self::PAID => 'zapłacona',
+          self::ISSUED => 'Nieopłacona',
+          self::PAID => 'Zapłacona',
         };
     }
 }

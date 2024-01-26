@@ -54,7 +54,7 @@
             responsive: true,
             ajax: {
                 type: 'GET',
-                url: '{{ route('dashboard.orders') }}',
+                url: '{{ route('dashboard.get.orders') }}',
                 data: function(data) {
                     data.parameter = getParameter();
                 },

@@ -14,6 +14,7 @@
                                 <tr>
                                     <th scope="col" class="px-6 py-3">{{ __('Imie') }}</th>
                                     <th scope="col" class="px-6 py-3">{{ __('Nazwisko') }}</th>
+                                    <th scope="col" class="px-6 py-3">{{ __('Ulica') }}</th>
                                     <th scope="col" class="px-6 py-3">{{ __('Miejsowość') }}</th>
                                     <th scope="col" class="px-6 py-3">{{ __('Nr tel') }}</th>
                                     <th scope="col" class="px-6 py-3">{{ __('Akcje') }}</th>
@@ -24,6 +25,7 @@
                                 <tr class="text-base bg-white border-b dark:bg-gray-900 dark:border-gray-700">
                                     <td class="px-6 py-4">{{ $client->first_name }}</td>
                                     <td class="px-6 py-4">{{ $client->last_name }}</td>
+                                    <td class="px-6 py-4">{{ $client->street }}</td>
                                     <td class="px-6 py-4">{{ $client->city }}</td>
                                     <td class="px-6 py-4">{{ $client->phone_number }}</td>
                                     <td>

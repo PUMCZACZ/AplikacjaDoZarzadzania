@@ -44,9 +44,4 @@ class OrderTransformer extends TransformerAbstract
             'deadline' => Carbon::parse($order->deadline)->format('d-m-Y') ?? '',
         ];
     }
-
-//    public function ()
-//    {
-//
-//    }
 }
