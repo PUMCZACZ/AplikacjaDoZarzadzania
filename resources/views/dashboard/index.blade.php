@@ -59,8 +59,10 @@
                 data: function(data) {
                     data.parameter = getParameter();
                 },
-                success: function (response) {
+                dataSrc: function (response) {
                    $('#sumValue').html(response.meta.sumPrice);
+
+                   return response.data;
                 }
             },
             columns: [
@@ -72,7 +74,7 @@
                 {'data': 'unit'},
                 {'data': 'price'},
                 {'data': 'deadline'},
-            ]
+            ],
         });
 
         table.on('click', 'tr', function () {
