@@ -54,18 +54,21 @@
                         </div>
                         <div class="flex flex-col mb-4">
                             <label class="mb-1" for="price">Cena</label>
-                            <input type="number" step="0.01" class="border-gray-200 rounded-md text-black" value="{{ old('price', $order->price) }}" name="price" />
+                            <input type="number" step="0.01" class="border-gray-200 rounded-md text-black"
+                                   value="{{ old('price', $order->price) }}" name="price" />
                         </div>
                         <div class="flex flex-col mb-4">
                             <label class="mb-1" for="last_name">Szacowany Termin Realizacji</label>
-                            <input type="date" class="border-gray-200 rounded-md text-black" value="{{ \Carbon\Carbon::parse($order->deadline)->format('Y-m-d') ?? \Illuminate\Support\Carbon::now()->toDateString() }}" name="deadline" />
+                            <input type="date" class="border-gray-200 rounded-md text-black"
+                                   value="{{ \Carbon\Carbon::parse($order->deadline)->format('Y-m-d') ?? \Illuminate\Support\Carbon::now()->toDateString() }}" name="deadline" />
                         </div>
                         <div class="flex flex-col mb-4">
                             <label class="mb-1" for="order_status">Status Płatności</label>
-                            <select>
-                                @foreach(\App\Domains\Payment\Enums\PaymentStatusEnum::cases() as $paymentStatus)
-                                    <option value="{{ $paymentStatus->value }}">
-                                        {{ $paymentStatus->translate() }}
+                            <select name="payment_status">
+                                @foreach(\App\Domains\Payment\Enums\PaymentStatusEnum::cases() as $status)
+                                    <option value="{{ $status->value }}"
+                                            @if($paymentStatus->status === $status->value) selected @endif>
+                                        {{ $status->translate() }}
                                     </option>
                                 @endforeach
                             </select>

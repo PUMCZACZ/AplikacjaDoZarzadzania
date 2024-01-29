@@ -32,8 +32,11 @@ class ApiOrderController extends Controller
             ->orderBy('deadline')
             ->get();
 
+        $sum = $data->sum('price');
+
         return fractal()->collection($data)
             ->transformWith(new OrderTransformer())
+            ->addMeta(['sumPrice' => $sum])
             ->toJson();
     }
 }
