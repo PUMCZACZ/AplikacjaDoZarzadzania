@@ -52,6 +52,16 @@
                             <input type="number" step="0.01" class="border-gray-200 rounded-md text-black" value="{{ old('price') }}" name="price" />
                         </div>
                         <div class="flex flex-col mb-4">
+                            <label class="mb-1" for="order_status">Status Płatności</label>
+                            <select name="payment_status">
+                                @foreach(\App\Domains\Payment\Enums\PaymentStatusEnum::cases() as $paymentStatus)
+                                    <option value="{{ $paymentStatus->value }}">
+                                        {{ $paymentStatus->translate() }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="flex flex-col mb-4">
                             <label class="mb-1" for="last_name">Szacowany Termin Realizacji</label>
                             <input type="date" class="border-gray-200 rounded-md text-black" value="{{ old('deadline', \Illuminate\Support\Carbon::now()->toDateString()) }}" name="deadline" />
                         </div>

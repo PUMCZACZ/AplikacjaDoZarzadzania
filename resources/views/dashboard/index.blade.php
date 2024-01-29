@@ -29,6 +29,7 @@
 
                         </tbody>
                     </table>
+                    <div class="price">Suma ze wszystkich zamówień: <span id="sumValue"></span> zł</div>
                 </div>
             </div>
         </div>
@@ -58,6 +59,9 @@
                 data: function(data) {
                     data.parameter = getParameter();
                 },
+                success: function (response) {
+                   $('#sumValue').html(response.meta.sumPrice);
+                }
             },
             columns: [
                 {'data': 'id'},

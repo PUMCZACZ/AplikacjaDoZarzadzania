@@ -8,14 +8,14 @@ use App\Domains\Order\Requests\OrderRequest;
 use App\Domains\Payment\Enums\PaymentStatusEnum;
 use App\Domains\Payment\Models\Payment;
 
-class CreatePaymentAction
+class PaymentAction
 {
     public function handle(OrderRequest $request, Order $order): void
     {
         Payment::create([
             'order_id' => $order->id,
             'client_id' => $request->client_id,
-            'status' => PaymentStatusEnum::ISSUED,
+            'status' => $request->payment_status,
             'amount' => $request->amount ?? 0,
         ]);
     }

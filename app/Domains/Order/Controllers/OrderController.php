@@ -6,12 +6,13 @@ use App\Domains\Admin\Models\Unit;
 use App\Domains\Client\Models\Client;
 use App\Domains\Order\Models\Order;
 use App\Domains\Order\Requests\OrderRequest;
-use App\Domains\Payment\Actions\CreatePaymentAction;
+use App\Domains\Payment\Actions\PaymentAction;
+use App\Domains\Payment\Models\Payment;
 use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
 {
-    public function __construct(protected CreatePaymentAction $createPaymentAction)
+    public function __construct(protected PaymentAction $createPaymentAction)
     {
     }
     public function index()
@@ -31,7 +32,7 @@ class OrderController extends Controller
 
     public function store(OrderRequest $request)
     {
-        $order = Order::create($request->validated());
+        $order = Order::create($request->validatedExcept('payment_status'));
 
         $this->createPaymentAction->handle($request, $order);
 
@@ -42,15 +43,18 @@ class OrderController extends Controller
     {
         $order->load(['client', 'unit', 'payments']);
 
+        $paymentStatus = Payment::where('order_id', $order->id)->latest()->first();
         $clients = Client::get();
         $units = Unit::get();
 
-        return view('orders.edit', compact('order', 'clients', 'units'));
+        return view('orders.edit', compact('order', 'clients', 'units', 'paymentStatus'));
     }
 
     public function update(Order $order, OrderRequest $request)
     {
-        $order->update($request->validated());
+        $order->update($request->validatedExcept('payment_status'));
+
+        $this->createPaymentAction->handle($request, $order);
 
         return redirect()->route('orders.index')->with('success', "Pomyślnie dodano zamówienie");
     }
