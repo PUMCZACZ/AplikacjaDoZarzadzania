@@ -62,6 +62,16 @@
                             </select>
                         </div>
                         <div class="flex flex-col mb-4">
+                            <label class="mb-1" for="delivery_method">Sposób Dostawy</label>
+                            <select name="delivery_method">
+                                @foreach(\App\Domains\Order\Enums\OrderDeliveryMethodEnum::cases() as $deliverMethod)
+                                    <option value="{{ $deliverMethod->value }}">
+                                        {{ $deliverMethod->translate() }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="flex flex-col mb-4">
                             <label class="mb-1" for="last_name">Szacowany Termin Realizacji</label>
                             <input type="date" class="border-gray-200 rounded-md text-black" value="{{ old('deadline', \Illuminate\Support\Carbon::now()->toDateString()) }}" name="deadline" />
                         </div>

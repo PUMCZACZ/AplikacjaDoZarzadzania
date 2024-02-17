@@ -1,10 +1,12 @@
 <x-app-layout>
+
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div class="text-gray-800 dark:text-white mb-20">
+                        <p>Lista wywozów</p>
                         <select id="day-filter" class="text-black">
                             <option value="1">{{ __('Dzisiaj') }}</option>
                             <option value="3">{{ __('3 dni') }}</option>
