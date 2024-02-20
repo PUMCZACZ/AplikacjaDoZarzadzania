@@ -34,10 +34,22 @@
                             <input type="date" class="border-gray-200 rounded-md text-black" value="{{ \Carbon\Carbon::parse($order->deadline)->format('Y-m-d') }}" disabled/>
                         </div>
                     <div class="flex flex-col mb-4">
+                        <label class="mb-1" for="delivery_method">Sposób Dostawy</label>
+                        <input name="delivery_method" value="{{ $order->delivery_metohd?->translate() }}" disabled>
+                    </div>
+                    <div class="flex flex-col mb-4">
                         <label class="mb-1" for="last_name">Termin Realizacji Zamówienia</label>
                         <input class="border-gray-200 rounded-md text-black" value="{{ $order->realised_at ?? 'Nie zrealizowano' }}" disabled/>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="max-w-xl mx-auto sm:px-6 lg:px-8">
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="p-6 text-gray-900 dark:text-gray-100">
+                <h1 class="text-lg font-bold">Dane Klienta</h1>
+                <div></div>
             </div>
         </div>
     </div>

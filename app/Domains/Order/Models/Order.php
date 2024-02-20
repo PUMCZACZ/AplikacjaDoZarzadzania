@@ -4,6 +4,7 @@ namespace App\Domains\Order\Models;
 
 use App\Domains\Admin\Models\Unit;
 use App\Domains\Client\Models\Client;
+use App\Domains\Order\Enums\OrderDeliveryMethodEnum;
 use App\Domains\Order\Enums\OrderTypeEnum;
 use App\Domains\Payment\Models\Payment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,9 +18,10 @@ use Illuminate\Support\Carbon;
  * @property int id
  * @property int client_id
  * @property string order_name
- * @property string order_type
+ * @property OrderTypeEnum order_type
  * @property float quantity
  * @property double price
+ * @property OrderDeliveryMethodEnum delivery_method
  * @property Carbon deadline
  * @property Carbon realised_at
  * @property-read Client $client
@@ -34,6 +36,7 @@ class Order extends Model
 
     protected $casts = [
         'order_type' => OrderTypeEnum::class,
+        'delivery_method' => OrderDeliveryMethodEnum::class,
         'deadline' => 'datetime',
         'realised_at' => 'datetime',
     ];

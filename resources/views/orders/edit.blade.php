@@ -18,7 +18,8 @@
                             <label class="mb-1" for="client_id">Klient</label>
                             <select class="select2" name="client_id">
                                 @foreach($clients as $client)
-                                    <option value="{{ old('client_id', $client->id) }}" @if($client->id == $order->client->id) selected @endif>
+                                    <option value="{{ old('client_id', $client->id) }}"
+                                        @selected($client->id === $order->client->id)>
                                         {{ $client->fullName() }}
                                     </option>
                                 @endforeach
@@ -32,7 +33,8 @@
                             <label class="mb-1" for="order_type">Typ Zamówienia</label>
                             <select class="border-gray-200 rounded-md text-black" name="order_type">
                                 @foreach(\App\Domains\Order\Enums\OrderTypeEnum::cases() as $orderType)
-                                    <option value="{{ $orderType->value }}" @if($orderType->value == $order->order_type->value) selected @endif>
+                                    <option value="{{ $orderType->value }}"
+                                        @selected($orderType->value == $order->order_type->value)>
                                         {{ $orderType->translate() }}
                                     </option>
                                 @endforeach
@@ -45,7 +47,8 @@
                             <label class="mb-1" for="quantity">J.M</label>
                             <select name="unit_id">
                                 @foreach($units as $unit)
-                                    <option value="{{ $unit->id }}" @if($order->unit?->id == $unit->id) selected @endif>
+                                    <option value="{{ $unit->id }}"
+                                        @selected($order->unit?->id == $unit->id)>
                                         {{ $unit->name }}
                                     </option>
                                 @endforeach
@@ -73,6 +76,17 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="flex flex-col mb-4">
+                            <label class="mb-1" for="delivery_method">Sposób Dostawy</label>
+                            <select name="delivery_method">
+                                @foreach(\App\Domains\Order\Enums\OrderDeliveryMethodEnum::cases() as $deliveryMethod)
+                                    <option value="{{ $deliveryMethod->value }}"
+                                    @selected($order->delivery_method === $deliveryMethod)>
+                                        {{ $deliveryMethod->translate() }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
                         <div>
                             <button type="submit" class="px-4 py-2 rounded-xl bg-blue-500 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-700 ">{{ __('Zapisz') }}</button>
                         </div>
@@ -81,6 +95,8 @@
             </div>
         </div>
     </div>
+
+
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="jquery.datetimepicker.js"></script>

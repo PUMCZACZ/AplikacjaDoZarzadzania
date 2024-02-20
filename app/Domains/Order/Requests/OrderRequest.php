@@ -2,6 +2,7 @@
 
 namespace App\Domains\Order\Requests;
 
+use App\Domains\Order\Enums\OrderDeliveryMethodEnum;
 use App\Domains\Order\Enums\OrderTypeEnum;
 use App\Domains\Payment\Enums\PaymentStatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
@@ -25,6 +26,7 @@ class OrderRequest extends FormRequest
             'deadline' => ['required', 'date'],
             'unit_id' => ['required', 'exists:units,id'],
             'payment_status' => ['required', PaymentStatusEnum::toValidationRule()],
+            'delivery_method' => ['nullable', OrderDeliveryMethodEnum::toValidationRule()]
         ];
     }
 }
