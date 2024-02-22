@@ -9,7 +9,6 @@ enum OrderTypeEnum: string
     case BAG = 'bag';
     case BIGBAG = 'bigbag';
     case LOOSE = 'loose';
-
     public function translate(): string
     {
         return match ($this) {
