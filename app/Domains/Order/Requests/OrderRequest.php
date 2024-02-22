@@ -26,7 +26,8 @@ class OrderRequest extends FormRequest
             'deadline' => ['required', 'date'],
             'unit_id' => ['required', 'exists:units,id'],
             'payment_status' => ['required', PaymentStatusEnum::toValidationRule()],
-            'delivery_method' => ['nullable', OrderDeliveryMethodEnum::toValidationRule()]
+            'delivery_method' => ['nullable', OrderDeliveryMethodEnum::toValidationRule()],
+            'package_quantity' => ['required', 'numeric', 'min:1'],
         ];
     }
 }

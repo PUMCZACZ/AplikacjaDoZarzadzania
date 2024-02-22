@@ -19,6 +19,7 @@ use Illuminate\Support\Carbon;
  * @property int client_id
  * @property string order_name
  * @property OrderTypeEnum order_type
+ * @property float package_quantity
  * @property float quantity
  * @property double price
  * @property OrderDeliveryMethodEnum delivery_method

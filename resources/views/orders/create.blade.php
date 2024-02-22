@@ -28,7 +28,7 @@
                         </div>
                         <div class="flex flex-col mb-4">
                             <label class="mb-1" for="order_type">Typ Zamówienia</label>
-                            <select class="border-gray-200 rounded-md text-black" name="order_type">
+                            <select class="border-gray-200 rounded-md text-black" name="order_type" id="order-type">
                                 @foreach(\App\Domains\Order\Enums\OrderTypeEnum::cases() as $orderType)
                                     <option value="{{ $orderType->value }}" @if(old('order_type' == $orderType->value)) selected @endif>
                                         {{ $orderType->translate() }}
@@ -36,12 +36,16 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="flex flex-col mb-4">
+                            <label class="mb-1" for="package_quantity">Ilość (opakowania)</label>
+                            <input type="number" step="1" class="border-gray-200 rounded-md text-black" value="{{ old('package_quantity') }}" name="package_quantity" id="package-quantity"/>
+                        </div>
                         <div class="flex flex-row mb-4">
                             <label class="mb-1" for="quantity">Ilość</label>
-                            <input type="number" step="0.01" class="border-gray-200 rounded-md text-black" value="{{ old('quantity') }}" name="quantity" />
+                            <input type="number" step="0.01" class="border-gray-200 rounded-md text-black" value="{{ old('quantity') }}" name="quantity" id="quantity"/>
 
                             <label class="mb-1" for="quantity">J.M</label>
-                            <select name="unit_id">
+                            <select name="unit_id" class="text-black">
                                @foreach($units as $unit)
                                    <option value="{{ $unit->id }}">{{ $unit->name }}</option>
                                @endforeach
@@ -91,6 +95,27 @@
         $(document).ready(function() {
             $('.select2').select2({
                 theme: 'classic',
+            });
+
+            let packageQuantity = $('#package-quantity');
+
+            function calculateToKilos() {
+                let packageQuantityValue = parseInt(packageQuantity.val());
+                const bagWeight = 15;
+
+                if(packageQuantity === 0) {
+                    return;
+                }
+
+                return packageQuantityValue * bagWeight;
+            }
+
+            packageQuantity.on('change', function () {
+                let orderType = $('#order-type').val()
+
+                if(orderType === '{{ \App\Domains\Order\Enums\OrderTypeEnum::BAG->value }}') {
+                    $('#quantity').val(calculateToKilos());
+                }
             });
         });
     </script>

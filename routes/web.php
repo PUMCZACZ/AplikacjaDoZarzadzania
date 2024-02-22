@@ -1,7 +1,7 @@
 <?php
 
 use App\Domains\Client\Controllers\ClientController;
-use App\Domains\Dashboard\DashboardController;
+use App\Domains\Dashboard\Controllers\DashboardController;
 use App\Domains\Order\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;

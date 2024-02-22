@@ -2,9 +2,8 @@
 
 namespace App\Domains\Order\Requests;
 
-use App\Domains\Order\Enums\OrderTypeEnum;
+use App\Domains\Order\Enums\OrderDeliveryMethodEnum;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Carbon;
 
 class ApiOrderRequest extends FormRequest
 {
@@ -16,7 +15,8 @@ class ApiOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'parameter' => ['required', 'in:1,3,7,all'],
+            'day' => ['required', 'in:1,3,7,all'],
+            'delivery_type' => ['required', 'in:on site,delivery to client,all'],
         ];
     }
 }
