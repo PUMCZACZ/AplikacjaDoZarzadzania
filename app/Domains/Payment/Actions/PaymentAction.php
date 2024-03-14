@@ -7,15 +7,15 @@ use App\Domains\Order\Models\Order;
 use App\Domains\Order\Requests\OrderRequest;
 use App\Domains\Payment\Enums\PaymentStatusEnum;
 use App\Domains\Payment\Models\Payment;
+use Illuminate\Http\Request;
 
 class PaymentAction
 {
-    public function handle(OrderRequest $request, Order $order): void
+    public function handle(Request $request, Order $order): void
     {
         Payment::create([
             'order_id' => $order->id,
-            'client_id' => $request->client_id,
-            'status' => $request->payment_status,
+            'client_id' => $order->client_id,
             'amount' => $request->amount ?? 0,
         ]);
     }

@@ -5,6 +5,11 @@
         </h2>
     </x-slot>
 
+    <div>
+        <button class="text-white">
+            <a href="{{ route('payment.create', $order) }}">Dodaj Płatność</a>
+        </button>
+    </div>
     <div class="py-12">
         <div class="max-w-xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
