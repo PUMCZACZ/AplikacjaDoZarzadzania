@@ -3,6 +3,7 @@
 use App\Domains\Client\Controllers\ClientController;
 use App\Domains\Dashboard\Controllers\DashboardController;
 use App\Domains\Order\Controllers\OrderController;
+use App\Domains\Payment\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +37,11 @@ Route::middleware(['auth', 'web'])->group(function () {
         Route::post('/{order}', [OrderController::class, 'update'])->name('update');
         Route::get('/{order}/show', [OrderController::class, 'show'])->name('show');
         Route::delete('/{order}', [OrderController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('payment')->name('payment.')->group(function () {
+        Route::get('/create/{order}', [PaymentController::class, 'create'])->name('create');
+        Route::post('/{order}', [PaymentController::class, 'store'])->name('store');
     });
 });
 
