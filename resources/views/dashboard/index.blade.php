@@ -75,7 +75,8 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="table">  
+                        
+                            <div class="table-responsive">  
                                 <table id="datatable" class="table table-striped">
                                     <thead>
                                         <tr class="redirect">
@@ -100,6 +101,9 @@
                     </div>
                 </div>
             </div>
+            </div>
+        
+        
 
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
