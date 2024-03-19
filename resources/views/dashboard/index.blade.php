@@ -4,37 +4,38 @@
             <div class="row mt-4">
                
                     <div class="col-sm-12">
-                        <div class="card">
-                            <div class="card-header bg-info">
-                                Zapotrzebowanie:
-                            </div>
+                        
+                            <div class="card shadow-lg p-3 mb-3 bg-body rounded">
+                                <div class="card-header shadow p-3 mb-2 bg-body rounded">
+                                    <h1><i class="bi bi-bar-chart-steps text-danger" style="font-size: 2rem;"> </i>Dane zapotrzebowania</h1>
+                                </div>
                                 <div class="row mt-4 mb-4 px-2">
                                     <div class="col-sm-4">
-                                        <div class="card">
-                                            <div class="card-header bg-info">
+                                        <div class="card mb-2">
+                                            <div class="card-header shadow p-3 mb-2 bg-body rounded">
                                             Aktualny miesiąc
                                             </div>
-                                            <div class="card-body">
-                                            Do zrobienia aktualny ilość zamówień w danym miesącu
+                                            <div class="card-body mb-2">
+                                            0.0 ton
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
-                                        <div class="card">
-                                            <div class="card-header bg-info">
+                                        <div class="card mb-2">
+                                            <div class="card-header shadow p-3 mb-2 bg-body rounded">
                                             Następny miesiąc
                                             </div>
-                                            <div class="card-body">
+                                            <div class="card-body mb-2">
                                             {{ $nextMonthDemand }}
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
-                                        <div class="card">
-                                            <div class="card-header bg-info">
+                                        <div class="card mb-2">
+                                            <div class="card-header shadow p-3 mb-2 bg-body rounded">
                                             Za 2 miesiące
                                             </div>
-                                            <div class="card-body">
+                                            <div class="card-body mb-2">
                                             {{ $nextTwoMonthDemand }}
                                             </div>
                                         </div>
@@ -47,15 +48,15 @@
                     </div>
                 
 
-                    <div class="card mt-4">
-                        <div class="card-header bg-info">
-                            Tabela wywozów / odbiorów
+                    <div class="card mt-2 shadow-lg p-3 mb-4 bg-body rounded">
+                        <div class="card-header shadow p-3 mb-4 bg-body rounded">
+                            <h1><i class="bi bi-truck pd-1 text-danger" style="font-size: 2rem;"> </i>Tabela wywozów / odbiorów</h1>
                         </div>
                         <div class="card-body">
                         <div class="row">
                             <div class="col-sm-6">
-                                <p>Dzień wywozów</p>
-                                <select id="day-filter" class="text-black">
+                            <p class="mb-2">Zakres dni</p>
+                                <select id="day-filter" class="form-select shadow mb-3">
                                     <option value="1">{{ __('Dzisiaj') }}</option>
                                     <option value="3">{{ __('3 dni') }}</option>
                                     <option value="7">{{ __('7 dni') }}</option>
@@ -63,8 +64,8 @@
                                 </select>
                             </div>
                             <div class="col-sm-6">
-                                <p>Kateogria</p>
-                                <select id="delivery-type" class="text-black">
+                                <p class="mb-2">Kateogria</p>
+                                <select id="delivery-type" class="form-select shadow mb-5">
                                 <option value="all">Wszystkie</option>
                                 @foreach(\App\Domains\Order\Enums\OrderDeliveryMethodEnum::cases() as $orderDeliveryMethod)
                                 <option value="{{ $orderDeliveryMethod->value }}">
@@ -74,34 +75,47 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row p-2">
                         
                             <div class="table-responsive">  
                                 <table id="datatable" class="table table-striped">
                                     <thead>
-                                        <tr class="redirect">
-                                            <th scope="col" class="px-6 py-3">{{ __('Id') }}</th>
-                                            <th scope="col" class="px-6 py-3">{{ __('Klient') }}</th>
-                                            <th scope="col" class="px-6 py-3">{{ __('Nazwa Zamówienia') }}</th>
-                                            <th scope="col" class="px-6 py-3">{{ __('Typ Zamówienia') }}</th>
-                                            <th scope="col" class="px-6 py-3">{{ __('Ilość') }}</th>
-                                            <th scope="col" class="px-6 py-3">{{ __('J.M') }}</th>
-                                            <th scope="col" class="px-6 py-3">{{ __('Cena') }}</th>
-                                            <th scope="col" class="px-6 py-3">{{ __('Termin Realizacji') }}</th>
+                                        <tr>
+                                            <th scope="col" class="">{{ __('Id') }}</th>
+                                            <th scope="col" class="">{{ __('Klient') }}</th>
+                                            <th scope="col" class="">{{ __('Nazwa Zamówienia') }}</th>
+                                            <th scope="col" class="">{{ __('Typ Zamówienia') }}</th>
+                                            <th scope="col" class="">{{ __('Ilość') }}</th>
+                                            <th scope="col" class="">{{ __('J.M') }}</th>
+                                            <th scope="col" class="">{{ __('Cena') }}</th>
+                                            <th scope="col" class="">{{ __('Termin Realizacji') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
 
                                     </tbody>
                                 </table>
-                                <div class="price">Suma ze wszystkich zamówień: <span id="sumValue"></span> zł</div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            <div class="card mt-2 shadow-lg p-3 mb-5 bg-body rounded">
+                <div class="price card-header shadow p-3 mb-4 bg-body rounded">
+                 <i class="bi bi-cash-coin pd-1 text-danger" style="font-size: 2rem;"> </i>Suma ze wszystkich zamówień
+                </div>
+                <div class="card-body">
+                    <div class="row justify-content-center">
+                        <div class="col-6 text-center">
+                            <p class="text-center inline" style="font-size:4rem;" id="sumValue"></p> <p class="inline" style="font-size:2rem;">zł</p>
                         </div>
                     </div>
                 </div>
             </div>
-            </div>
+        </div> 
+                       
+                    
+            
+            
         
         
 
@@ -161,5 +175,7 @@
 
             window.location.href = '{{ route('orders.show', [':order']) }}'.replace(':order', order.id);
         });
+
+
     </script>
 </x-app-layout>
