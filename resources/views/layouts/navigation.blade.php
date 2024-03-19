@@ -76,6 +76,12 @@
             <x-responsive-nav-link :href="route('dashboard.index')" :active="request()->routeIs('dashboard.index')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('clients.index')" :active="request()->routeIs('clients.index')">
+                {{ __('Klienci') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('orders.index')" :active="request()->routeIs('orders.index')">
+                {{ __('Zamówienia') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
