@@ -9,23 +9,46 @@
                         <div class="flex flex-col mb-4">
                             <label class="mb-1" for="first_name">Imię</label>
                             <input class="border-gray-200 rounded-md text-black " value="{{ old('first_name', $client->first_name) }}" name="first_name" />
+                            @error('first_name')
+                            <p class="text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div class="flex flex-col mb-4">
                             <label class="mb-1" for="last_name">Nazwisko</label>
                             <input class="border-gray-200 rounded-md text-black" value="{{ old('last_name', $client->last_name) }}" name="last_name" />
+                            @error('last_name')
+                            <p class="text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div class="flex flex-col mb-4">
-                            <label class="mb-1" for="last_name">Miejsowość</label>
+                            <label class="mb-1" for="city">Miejsowość</label>
                             <input class="border-gray-200 rounded-md text-black" value="{{ old('city', $client->city) }}" name="city" />
+                            @error('city')
+                            <p class="text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="flex flex-col mb-4">
+                            <label class="mb-1" for="last_name">Ulica</label>
+                            <input class="border-gray-200 rounded-md text-black" value="{{ old('street', $client->street) }}" name="street" />
+                            @error('street')
+                            <p class="text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div class="flex flex-col mb-4">
                             <label class="mb-1" for="last_name">Kod Pocztowy</label>
                             <input class="border-gray-200 rounded-md text-black" value="{{ old('post_code', $client->post_code) }}" name="post_code" />
+                            @error('post_code')
+                            <p class="text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div class="flex flex-col mb-4">
                             <label class="mb-1" for="last_name">Numer Telefonu</label>
                             <input class="border-gray-200 rounded-md text-black" value="{{ old('phone_number', $client->phone_number) }}" name="phone_number" />
+                            @error('phone')
+                            <p class="text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
+
                         <div>
                             <button type="submit" class="px-4 py-2 rounded-xl bg-blue-500 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-700 ">{{ __('Zapisz') }}</button>
                         </div>
