@@ -2,9 +2,9 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
     <div class="container">
             <div class="row mt-4">
-               
+
                     <div class="col-sm-12">
-                        
+
                             <div class="card shadow-lg p-3 mb-3 bg-body rounded">
                                 <div class="card-header shadow p-3 mb-2 bg-body rounded">
                                     <h1><i class="bi bi-bar-chart-steps text-danger" style="font-size: 2rem;"> </i>Dane zapotrzebowania</h1>
@@ -42,11 +42,11 @@
                                     </div>
 
                                 </div>
-                             
+
                             </div>
-                        </div>  
+                        </div>
                     </div>
-                
+
 
                     <div class="card mt-2 shadow-lg p-3 mb-4 bg-body rounded">
                         <div class="card-header shadow p-3 mb-4 bg-body rounded">
@@ -55,13 +55,17 @@
                         <div class="card-body">
                         <div class="row">
                             <div class="col-sm-6">
-                            <p class="mb-2">Zakres dni</p>
-                                <select id="day-filter" class="form-select shadow mb-3">
-                                    <option value="1">{{ __('Dzisiaj') }}</option>
-                                    <option value="3">{{ __('3 dni') }}</option>
-                                    <option value="7">{{ __('7 dni') }}</option>
-                                    <option value="all">{{ __('Wszystkie') }}</option>
-                                </select>
+                                <div class="dates-filters-container">
+                                    <label>
+                                        Od
+                                        <input id="date_from" type="date" name="date_from" class=""
+                                               value="{{ \Illuminate\Support\Carbon::now()->toDateString() }}" />
+                                    </label>
+                                    <label>
+                                        Do
+                                        <input id="date_to" type="date" name="date_to" value="{{ \Illuminate\Support\Carbon::now()->toDateString() }}">
+                                    </label>
+                                </div>
                             </div>
                             <div class="col-sm-6">
                                 <p class="mb-2">Kateogria</p>
@@ -76,8 +80,8 @@
                             </div>
                         </div>
                         <div class="row p-2">
-                        
-                            <div class="table-responsive">  
+
+                            <div class="table-responsive">
                                 <table id="datatable" class="table table-striped">
                                     <thead>
                                         <tr>
@@ -111,20 +115,25 @@
                     </div>
                 </div>
             </div>
-        </div> 
-                       
-                    
-            
-            
-        
-        
+        </div>
+
+
+
+
+
+
 
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script>
-        function getDay() {
-            return $('#day-filter').val();
+        let dateFrom = $('#date_from');
+        let dateTo = $('#date_to');
+        function getDateFrom() {
+            return dateFrom.val();
+        }
+        function getDateTo() {
+            return dateTo.val();
         }
 
         function getDeliveryType() {
@@ -135,9 +144,14 @@
             table.ajax.reload();
         }
 
-        $('#day-filter').change(() => {
+        dateTo.change(() => {
             reloadData();
         });
+
+        dateFrom.change(() => {
+            reloadData();
+        });
+
 
         $('#delivery-type').change(() => {
             reloadData();
@@ -149,7 +163,8 @@
                 type: 'GET',
                 url: '{{ route('dashboard.get.orders') }}',
                 data: function(data) {
-                    data.day = getDay();
+                    data.date_from = getDateFrom();
+                    data.date_to = getDateTo();
                     data.delivery_type = getDeliveryType();
                 },
                 dataSrc: function (response) {

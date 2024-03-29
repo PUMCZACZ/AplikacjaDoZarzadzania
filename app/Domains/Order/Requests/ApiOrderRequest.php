@@ -15,7 +15,8 @@ class ApiOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'day' => ['required', 'in:1,3,7,all'],
+            'date_from' => ['date_format:Y-m-d'],
+            'date_to' => ['date_format:Y-m-d'],
             'delivery_type' => ['required', 'in:on site,delivery to client,all'],
         ];
     }
