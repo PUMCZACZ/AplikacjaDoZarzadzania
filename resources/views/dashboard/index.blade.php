@@ -16,7 +16,7 @@
                                             Aktualny miesiąc
                                             </div>
                                             <div class="card-body mb-2">
-                                            0.0 ton
+                                                {{ $materialDemand }}
                                             </div>
                                         </div>
                                     </div>
@@ -117,18 +117,14 @@
             </div>
         </div>
 
-
-
-
-
-
-
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script>
         let dateFrom = $('#date_from');
         let dateTo = $('#date_to');
+        let materialDemand = $('#material-demand');
+
         function getDateFrom() {
             return dateFrom.val();
         }

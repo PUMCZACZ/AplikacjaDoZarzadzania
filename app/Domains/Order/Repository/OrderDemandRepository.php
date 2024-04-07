@@ -24,4 +24,15 @@ class OrderDemandRepository
 
         return Order::whereBetween('deadline', [$dateTwoMonthStart, $dateTwoMonthEnd])->sum('quantity');
     }
+
+    public function materialDemand(): float
+    {
+        $startDate = Carbon::now()->firstOfMonth();
+        $endDate = Carbon::now()->lastOfMonth();
+
+        return Order::where('deadline', '>=', $startDate)
+            ->where('deadline', '<=', $endDate)
+            ->whereNull('realised_at')
+            ->sum('quantity');
+    }
 }

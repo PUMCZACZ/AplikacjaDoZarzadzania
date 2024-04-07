@@ -6,14 +6,11 @@ use App\Domains\Order\Models\Order;
 use App\Domains\Order\Requests\ApiOrderRequest;
 use App\Domains\Order\Transformers\OrderTransformer;
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class ApiOrderController extends Controller
 {
     public function getOrders(ApiOrderRequest $request)
     {
-        $day = $request->day;
         $deliveryType = $request->delivery_type;
         $dateFrom = $request->date_from;
         $dateTo = $request->date_to;
@@ -32,11 +29,10 @@ class ApiOrderController extends Controller
             ->get();
 
         $sumPrice = $data->sum('price');
-        $sumKilo = $data->sum('quantity');
 
         return fractal()->collection($data)
             ->transformWith(new OrderTransformer())
-            ->addMeta(['sumPrice' => $sumPrice, 'sumKilo' => $sumKilo])
+            ->addMeta(['sumPrice' => $sumPrice])
             ->toJson();
     }
 }
