@@ -22,21 +22,17 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="order_name">Nazwa Zamówienia</label>
-                        <input class="form-control" value="{{ old('order_name') }}" name="order_name"/>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="order_type">Typ Zamówienia</label>
-                        <select class="form-select" name="order_type" id="order-type">
-                            @foreach(\App\Domains\Order\Enums\OrderTypeEnum::cases() as $orderType)
-                                <option
-                                    value="{{ $orderType->value }}" @selected(old('order_type' === $orderType->value))>
-                                    {{ $orderType->translate() }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
+                    <x-form.input name="order_name" label="Nazwa Zamówienia" id="order-name"
+                                  value="{{ old('order_name') }}" />
+                    <x-form.select name="order_type" id="order-type" label="Typ Zamówienia">
+                        @foreach(\App\Domains\Order\Enums\OrderTypeEnum::cases() as $orderType)
+                            <option value="{{ $orderType->value }}" @selected(old('order_type' === $orderType->value))>
+                                {{ $orderType->translate() }}
+                            </option>
+                        @endforeach
+                    </x-form.select>
+                    <x-form.input type="number" name="order_name" label="Nazwa Zamówienia" id="order-name"
+                                  value="{{ old('order_name') }}" />
                     <div class="mb-3">
                         <label class="form-label" for="package_quantity">Ilość (opakowania)</label>
                         <input type="number" step="1" class="form-control" value="{{ old('package_quantity') }}"
