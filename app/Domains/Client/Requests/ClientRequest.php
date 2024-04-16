@@ -18,7 +18,7 @@ class ClientRequest extends FormRequest
             'last_name' => ['required', 'string'],
             'city' => ['required', 'string'],
             'post_code' => ['required', 'string'],
-            'phone_number' => ['required', 'string'],
+            'phone_number' => ['nullable', 'string'],
             'street' => ['required', 'string']
         ];
     }

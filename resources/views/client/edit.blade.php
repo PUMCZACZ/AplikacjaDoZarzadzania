@@ -1,60 +1,43 @@
-<x-app-layout>
+@extends('layouts.master')
 
-    <div class="py-12">
-        <div class="max-w-xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <form action="{{ route('clients.update', $client) }}" method="POST">
-                        @csrf
-                        <div class="flex flex-col mb-4">
-                            <label class="mb-1" for="first_name">Imię</label>
-                            <input class="border-gray-200 rounded-md text-black " value="{{ old('first_name', $client->first_name) }}" name="first_name" />
-                            @error('first_name')
-                            <p class="text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
-                        <div class="flex flex-col mb-4">
-                            <label class="mb-1" for="last_name">Nazwisko</label>
-                            <input class="border-gray-200 rounded-md text-black" value="{{ old('last_name', $client->last_name) }}" name="last_name" />
-                            @error('last_name')
-                            <p class="text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
-                        <div class="flex flex-col mb-4">
-                            <label class="mb-1" for="city">Miejsowość</label>
-                            <input class="border-gray-200 rounded-md text-black" value="{{ old('city', $client->city) }}" name="city" />
-                            @error('city')
-                            <p class="text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
-                        <div class="flex flex-col mb-4">
-                            <label class="mb-1" for="last_name">Ulica</label>
-                            <input class="border-gray-200 rounded-md text-black" value="{{ old('street', $client->street) }}" name="street" />
-                            @error('street')
-                            <p class="text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
-                        <div class="flex flex-col mb-4">
-                            <label class="mb-1" for="last_name">Kod Pocztowy</label>
-                            <input class="border-gray-200 rounded-md text-black" value="{{ old('post_code', $client->post_code) }}" name="post_code" />
-                            @error('post_code')
-                            <p class="text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
-                        <div class="flex flex-col mb-4">
-                            <label class="mb-1" for="last_name">Numer Telefonu</label>
-                            <input class="border-gray-200 rounded-md text-black" value="{{ old('phone_number', $client->phone_number) }}" name="phone_number" />
-                            @error('phone')
-                            <p class="text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
+@section('title', 'Edycja klienta')
 
-                        <div>
-                            <button type="submit" class="px-4 py-2 rounded-xl bg-blue-500 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-700 ">{{ __('Zapisz') }}</button>
-                        </div>
-                    </form>
+@push('page-css')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="jquery.datetimepicker.css"/>
+@endpush
+
+@section('content')
+    <div class="container">
+        <div class="card shadow-lg p-3 mb-3 bg-body rounded">
+            <h1 class="mb-4">{{ __('Tworzenie klienta') }}</h1>
+            <form action="{{ route('clients.update', $client) }}" method="POST">
+                @csrf
+                <x-form.input name="first_name" id="first-name" value="{{ old('first_name', $client->first_name) }}"
+                              label="Imię"/>
+
+                <x-form.input name="last_name" id="last-name" value="{{ old('last_name', $client->last_name) }}"
+                              label="Nazwisko"/>
+
+                <x-form.input name="city" id="city" value="{{ old('city', $client->city) }}" label="Miejsowość"/>
+
+                <x-form.input name="street" id="street" value="{{ old('street', $client->street) }}"
+                              label="Ulica"/>
+
+                <x-form.input name="post_code" id="post-code" value="{{ old('post_code', $client->post_code) }}"
+                              label="Kod pocztowy"/>
+
+                <x-form.input name="phone_number" id="phone-number"
+                              value="{{ old('phone_number', $client->phone_number) }}" label="Numer telefonu"/>
+
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-primary px-4 py-2">{{ __('Zapisz') }}</button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
-</x-app-layout>
+@endsection
+
+@push('page-scripts')
+
+@endpush

@@ -1,106 +1,79 @@
-<x-app-layout>
+@extends('layouts.master')
+
+@section('title', 'Edycja zamówienia')
+
+@push('page-css')
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="jquery.datetimepicker.css"/>
+@endpush
 
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Edycja Zamówienia') . $order->order_name }}
-        </h2>
-    </x-slot>
+@section('content')
+    <div class="container">
+        <div class="card shadow-lg p-3 mb-3 bg-body rounded">
+            <h1 class="mb-4">{{ __('Edycja zamówienia' . ': ' . $order->order_name) }}</h1>
+            <div>
+                <form action="{{ route('orders.store') }}" method="POST">
+                    @csrf
+                    <x-form.select name="client_id" id="client-id" label="Klient">
+                        @foreach($clients as $client)
+                            <option value="{{ old('client_id', $client->id) }}"
+                                @selected($client->id === $order->client->id)>
+                                {{ $client->fullName() }}
+                            </option>
+                        @endforeach
+                    </x-form.select>
 
-    <div class="py-12">
-        <div class="max-w-xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <form action="{{ route('orders.update', $order) }}" method="POST">
-                        @csrf
-                        <div class="flex flex-col mb-4">
-                            <label class="mb-1" for="client_id">Klient</label>
-                            <select class="select2" name="client_id">
-                                @foreach($clients as $client)
-                                    <option value="{{ old('client_id', $client->id) }}"
-                                        @selected($client->id === $order->client->id)>
-                                        {{ $client->fullName() }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="flex flex-col mb-4">
-                            <label class="mb-1" for="order_name">Nazwa Zamówienia</label>
-                            <input class="border-gray-200 rounded-md text-black" value="{{ old('order_name', $order->order_name) }}" name="order_name" />
-                        </div>
-                        <div class="flex flex-col mb-4">
-                            <label class="mb-1" for="order_type">Typ Zamówienia</label>
-                            <select class="border-gray-200 rounded-md text-black" name="order_type" id="order-type">
-                                @foreach(\App\Domains\Order\Enums\OrderTypeEnum::cases() as $orderType)
-                                    <option value="{{ $orderType->value }}"
-                                        @selected($orderType->value === $order->order_type->value)>
-                                        {{ $orderType->translate() }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="flex flex-col mb-4">
-                            <label class="mb-1" for="package_quantity">Ilość (opakowania)</label>
-                            <input type="number" step="1" class="border-gray-200 rounded-md text-black" value="{{ old('package_quantity', $order->package_quantity) }}" name="package_quantity" id="package-quantity"/>
-                        </div>
-                        <div class="flex flex-row mb-4">
-                            <label class="mb-1" for="quantity">Ilość</label>
-                            <input type="number" step="0.01" class="border-gray-200 rounded-md text-black" value="{{ old('quantity', $order->quantity) }}" name="quantity" id="quantity" />
+                    <x-form.input name="order_name" label="Nazwa Zamówienia" id="order-name"
+                                  value="{{ old('order_name', $order->order_name) }}" />
 
-                            <label class="mb-1" for="quantity">J.M</label>
-                            <select name="unit_id">
-                                @foreach($units as $unit)
-                                    <option value="{{ $unit->id }}"
-                                        @selected($order->unit?->id == $unit->id)>
-                                        {{ $unit->name }}
-                                    </option>
-                                @endforeach
-                            </select>
+                    <x-form.select name="order_type" id="order-type" label="Typ Zamówienia">
+                        @foreach(\App\Domains\Order\Enums\OrderTypeEnum::cases() as $orderType)
+                            <option
+                                value="{{ $orderType->value }}"
+                                @selected(old('order_type', $orderType->value) === $order->order_type)>
+                                {{ $orderType->translate() }}
+                            </option>
+                        @endforeach
+                    </x-form.select>
 
-                        </div>
-                        <div class="flex flex-col mb-4">
-                            <label class="mb-1" for="price">Cena</label>
-                            <input type="number" step="0.01" class="border-gray-200 rounded-md text-black"
-                                   value="{{ old('price', $order->price) }}" name="price" />
-                        </div>
-                        <div class="flex flex-col mb-4">
-                            <label class="mb-1" for="last_name">Szacowany Termin Realizacji</label>
-                            <input type="date" class="border-gray-200 rounded-md text-black"
-                                   value="{{ \Carbon\Carbon::parse($order->deadline)->format('Y-m-d') ?? \Illuminate\Support\Carbon::now()->toDateString() }}" name="deadline" />
-                        </div>
-                        <div class="flex flex-col mb-4">
-                            <label class="mb-1" for="order_status">Status Płatności</label>
-                            <select name="payment_status">
-                                @foreach(\App\Domains\Payment\Enums\PaymentStatusEnum::cases() as $status)
-                                    <option value="{{ $status->value }}"
-                                            @if($paymentStatus->status === $status->value) selected @endif>
-                                        {{ $status->translate() }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="flex flex-col mb-4">
-                            <label class="mb-1" for="delivery_method">Sposób Dostawy</label>
-                            <select name="delivery_method">
-                                @foreach(\App\Domains\Order\Enums\OrderDeliveryMethodEnum::cases() as $deliveryMethod)
-                                    <option value="{{ $deliveryMethod->value }}"
-                                    @selected($order->delivery_method === $deliveryMethod)>
-                                        {{ $deliveryMethod->translate() }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div>
-                            <button type="submit" class="px-4 py-2 rounded-xl bg-blue-500 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-700 ">{{ __('Zapisz') }}</button>
-                        </div>
-                    </form>
-                </div>
+                    <x-form.input type="number" name="package_quantity" label="Ilość (opakowań)" id="package-quantity"
+                                  step="1" value="{{ old('package_quantity', $order->package_quantity) }}" />
+
+                    <x-form.input type="number" name="quantity" label="Waga" id="quantity" step="1"
+                                  value="{{ old('quantity', $order->quantity) }}" />
+
+                    <x-form.input type="number" name="price" label="Cena" id="price" step="0.01"
+                                  value="{{ old('price', $order->price) }}" />
+
+                    <x-form.select name="payment_status" id="payment-status" label="Status Płatności">
+                        @foreach(\App\Domains\Payment\Enums\PaymentStatusEnum::cases() as $paymentStatus)
+                            <option value="{{ $paymentStatus->value }}" @selected(old('payment_status', $paymentStatus->value))>
+                                {{ $paymentStatus->translate() }}
+                            </option>
+                        @endforeach
+                    </x-form.select>
+
+                    <x-form.select name="delivery_method" id="delivery-method" label="Sposób dostawy">
+                        @foreach(\App\Domains\Order\Enums\OrderDeliveryMethodEnum::cases() as $deliverMethod)
+                            <option value="{{ $deliverMethod->value }}">
+                                {{ $deliverMethod->translate() }}
+                            </option>
+                        @endforeach
+                    </x-form.select>
+
+                    <x-form.input type="date" name="deadline" id="deadline" label="Szacowany Termin Realizacji"
+                                  value="{{ \Carbon\Carbon::parse($order->deadline)->format('Y-m-d') ?? \Illuminate\Support\Carbon::now()->toDateString() }}" />
+
+                    <div class="mt-5">
+                        <button class="btn btn-primary px-4 py-2" type="submit">Zapisz</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+@endsection
 
-
+@push('page-scripts')
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="jquery.datetimepicker.js"></script>
@@ -113,26 +86,29 @@
 
             let packageQuantity = $('#package-quantity');
 
-            function calculateToKilos() {
+            function calculateToKilos(orderTypeWeight) {
                 let packageQuantityValue = parseInt(packageQuantity.val());
-                const bagWeight = 15;
 
                 if(packageQuantity === 0) {
                     return;
                 }
 
-                return packageQuantityValue * bagWeight;
+                return packageQuantityValue * orderTypeWeight;
             }
 
             packageQuantity.on('change', function () {
                 let orderType = $('#order-type').val()
+                const bagWeight = 15;
+                const palleteWeight = 990;
 
                 if(orderType === '{{ \App\Domains\Order\Enums\OrderTypeEnum::BAG->value }}') {
-                    $('#quantity').val(calculateToKilos());
+                    $('#quantity').val(calculateToKilos(bagWeight));
+                }
+
+                if(orderType === '{{ \App\Domains\Order\Enums\OrderTypeEnum::PALLET->value }}') {
+                    $('#quantity').val(calculateToKilos(palleteWeight));
                 }
             });
         });
     </script>
-</x-app-layout>
-
-
+@endpush
