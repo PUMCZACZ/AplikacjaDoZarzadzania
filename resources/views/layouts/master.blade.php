@@ -11,7 +11,7 @@
 
     @stack('page-css')
 
-    @vite(['resources/css/app.scss', 'resources/js/app.js'])
+    @vite(['resources/scss/app.scss', 'resources/js/app.js'])
 </head>
 <body>
     @include('layouts.navigation')
