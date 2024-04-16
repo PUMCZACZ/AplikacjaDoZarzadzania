@@ -6,29 +6,18 @@ use App\Domains\Order\Models\Order;
 use App\Domains\Order\Requests\ApiOrderRequest;
 use App\Domains\Order\Transformers\OrderTransformer;
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class ApiOrderController extends Controller
 {
     public function getOrders(ApiOrderRequest $request)
     {
-        $currentDate = Carbon::now()->toDateString();
-        $day = $request->day;
         $deliveryType = $request->delivery_type;
+        $dateFrom = $request->date_from;
+        $dateTo = $request->date_to;
 
         $data = Order::with('client')
-            ->when($day === '1', function ($oneDay) use($currentDate) {
-            $oneDay->where('deadline', $currentDate);
-        })
-            ->when($day === '3', function ($threeDays) use($currentDate) {
-                $threeDays->whereBetween('deadline', [$currentDate, Carbon::now()->addDays(3)->toDateString()]);
-            })
-            ->when($day === '7', function ($sevenDays) use($currentDate) {
-                $sevenDays->whereBetween('deadline', [$currentDate, Carbon::now()->addDays(7)->toDateString()]);
-            })
-            ->when($day === 'all', function ($all) {
-                $all->whereNull('realised_at');
+            ->when($dateTo, function ($date) use($dateFrom, $dateTo) {
+                $date->whereBetween('deadline', [$dateFrom, $dateTo]);
             })
             ->when($deliveryType === 'all', function ($all) {
                 $all->whereNotNull('delivery_method');
@@ -39,11 +28,11 @@ class ApiOrderController extends Controller
             ->orderBy('deadline')
             ->get();
 
-        $sum = $data->sum('price');
+        $sumPrice = $data->sum('price');
 
         return fractal()->collection($data)
             ->transformWith(new OrderTransformer())
-            ->addMeta(['sumPrice' => $sum])
+            ->addMeta(['sumPrice' => $sumPrice])
             ->toJson();
     }
 }

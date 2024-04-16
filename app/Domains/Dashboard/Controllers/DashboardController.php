@@ -16,7 +16,8 @@ class DashboardController extends Controller
     {
         $nextMonthDemand = TransformKiloToTonsHelper::toTons($this->demandRepository->getNextMonthOrdersDemandSum());
         $nextTwoMonthDemand = TransformKiloToTonsHelper::toTons($this->demandRepository->getNextTwoMonthOrdersDemandSum());
+        $materialDemand = TransformKiloToTonsHelper::toTons($this->demandRepository->materialDemand());
 
-        return view('dashboard.index', compact(['nextMonthDemand', 'nextTwoMonthDemand']));
+        return view('dashboard.index', compact(['nextMonthDemand', 'nextTwoMonthDemand', 'materialDemand']));
     }
 }
