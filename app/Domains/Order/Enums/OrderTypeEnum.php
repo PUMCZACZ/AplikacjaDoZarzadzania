@@ -9,12 +9,14 @@ enum OrderTypeEnum: string
     case BAG = 'bag';
     case BIGBAG = 'bigbag';
     case LOOSE = 'loose';
+    case PALLET = 'pallet';
     public function translate(): string
     {
         return match ($this) {
           self::BAG => 'Worek',
           self::BIGBAG => 'Big bag',
           self::LOOSE => 'Luz',
+          self::PALLET => 'Paleta',
         };
     }
 

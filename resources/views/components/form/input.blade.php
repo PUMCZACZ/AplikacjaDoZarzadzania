@@ -7,5 +7,5 @@
 ])
 <div class="mb-3 {{ $containerClass }}">
     <label class="form-label" for="{{ $name }}">{{ $label }}</label>
-    <input {{ $attributes->merge(['class' => 'form-control']) }} class="form-control" name="{{ $name }}"/>
+    <input {{ $attributes->merge(['class' => 'form-control']) }} name="{{ $name }}" id="{{ $id }}"/>
 </div>

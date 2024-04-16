@@ -1,61 +1,91 @@
-<x-app-layout>
+@extends('layouts.master')
+
+@section('title', 'Podgląd klienta')
+
+@push('page-css')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
-    <div class="py-12">
-        <div class="max-w-xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                        <div class="flex flex-col mb-4">
-                            <label class="mb-1" for="first_name">Imię</label>
-                            <input class="border-gray-200 rounded-md text-black " value="{{  $client->first_name }}" name="first_name" disabled/>
-                        </div>
-                        <div class="flex flex-col mb-4">
-                            <label class="mb-1" for="last_name">Nazwisko</label>
-                            <input class="border-gray-200 rounded-md text-black" value="{{ $client->last_name }}" name="last_name" disabled/>
-                        </div>
-                        <div class="flex flex-col mb-4">
-                            <label class="mb-1" for="last_name">Miejsowość</label>
-                            <input class="border-gray-200 rounded-md text-black" value="{{ $client->city }}" name="city" disabled/>
-                        </div>
-                        <div class="flex flex-col mb-4">
-                            <label class="mb-1" for="last_name">Kod Pocztowy</label>
-                            <input class="border-gray-200 rounded-md text-black" value="{{ $client->post_code }}" name="post_code" disabled/>
-                        </div>
-                        <div class="flex flex-col mb-4">
-                            <label class="mb-1" for="last_name">Numer Telefonu</label>
-                            <input class="border-gray-200 rounded-md text-black" value="{{ $client->phone_number }}" name="phone_number" disabled/>
-                        </div>
+@endpush
+
+@section('content')
+    <div class="container">
+        <div class="card shadow-lg p-3 mb-3 bg-body rounded">
+            <div class="card-header shadow p-3 mb-3 bg-body rounded">
+                <h4>
+                    <i class="bi bi-person text-danger" style="font-size: 2rem;"> </i>
+                    Dane Klienta:
+                </h4>
+            </div>
+            <div>
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="client_id">
+                        <span>Imię</span>
+                    </label>
+                    <input class="form-control" value="{{ $client->first_name }}" disabled/>
+                </div>
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="client_id">
+                       <span>Nazwisko</span>
+                    </label>
+                    <input class="form-control" value="{{ $client->last_name }}" disabled/>
+                </div>
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="client_id">
+                        <span>Miejscowość</span>
+                    </label>
+                    <input class="form-control" value="{{ $client->city }}" disabled/>
+                </div>
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="client_id">
+                        <span>Kod pocztowy</span>
+                    </label>
+                    <input class="form-control" value="{{ $client->post_code }}" disabled/>
+                </div>
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="client_id">
+                        <span>Numer telefonu</span>
+                    </label>
+                    <input class="form-control" value="{{ $client->phone_number }}" disabled/>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="mt-16">
-        <table id="datatable" class="display">
-            <thead>
-                <tr>
-                    <th scope="col" class="px-6 py-3">{{ __('Nazwa Zamówienia') }}</th>
-                    <th scope="col" class="px-6 py-3">{{ __('Typ Zamówienia') }}</th>
-                    <th scope="col" class="px-6 py-3">{{ __('Ilość') }}</th>
-                    <th scope="col" class="px-6 py-3">{{ __('J.M') }}</th>
-                    <th scope="col" class="px-6 py-3">{{ __('Cena') }}</th>
-                    <th scope="col" class="px-6 py-3">{{ __('Termin Realizacji') }}</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($client->orders as $order)
-                    <tr class="redirect" onclick="redirectToOrder({{ $order }})">
-                        <td class="px-6 py-4">{{ $order->order_name }}</td>
-                        <td class="px-6 py-4">{{ $order->order_type }}</td>
-                        <td class="px-6 py-4">{{ $order->quantity }}</td>
-                        <td class="px-6 py-4">{{ $order->unit?->name }}</td>
-                        <td class="px-6 py-4">{{ $order->price }}</td>
-                        <td class="px-6 py-4">{{ $order->deadlineDate() }}</td>
+        <div class="card card shadow-lg p-3 mb-3 bg-body rounded">
+            <div class="card-header shadow p-3 mb-2 bg-body rounded">
+                <h4>
+                    <i class="bi bi-wallet-fill text-danger" style="font-size: 2rem;"> </i>
+                    Zamówienia klienta:
+                </h4>
+            </div>
+            <div class="table-responsive mt-2">
+                <table id="datatable" class="table table-striped">
+                    <thead>
+                    <tr>
+                        <td>{{ __('Nazwa zamówienia') }}</td>
+                        <td>{{ __('Typ zamówienia') }}</td>
+                        <td>{{ __('Ilość') }}</td>
+                        <td>{{ __('Cena') }}</td>
+                        <td>{{ __('Szacowany termin realizacji') }}</td>
+                        <td>{{ __('Status') }}</td>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                    </thead>
+                    <tbody>
+                    @foreach($client->orders as $order)
+                        <tr class="redirect" ondblclick="redirectToOrder({{ $order }})">
+                            <td class="px-6 py-4">{{ $order->order_name }}</td>
+                            <td class="px-6 py-4">{{ $order->order_type }}</td>
+                            <td class="px-6 py-4">{{ $order->quantity }}</td>
+                            <td class="px-6 py-4">{{ $order->price }}</td>
+                            <td class="px-6 py-4">{{ $order->deadlineDate() }}</td>
+                            <td></td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
+@endsection
 
-    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.7.0.js"></script>
+@push('page-scripts')
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script>
         new DataTable('#datatable');
@@ -64,5 +94,5 @@
             window.location.href = '{{ route('orders.show', [':order']) }}'.replace(':order', order.id);
         }
     </script>
-</x-app-layout>
+@endpush
 
