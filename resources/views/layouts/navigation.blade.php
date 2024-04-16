@@ -19,6 +19,13 @@
                     <a class="nav-link" href="{{ route('orders.index') }}">Zamowienia</a>
                 </li>
             </ul>
+            <div>
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    @method('POST')
+                    <button class="btn" type="submit">Wyloguj</button>
+                </form>
+            </div>
         </div>
     </div>
 </nav>
