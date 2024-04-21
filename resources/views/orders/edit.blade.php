@@ -12,7 +12,7 @@
         <div class="card shadow-lg p-3 mb-3 bg-body rounded">
             <h1 class="mb-4">{{ __('Edycja zamówienia' . ': ' . $order->order_name) }}</h1>
             <div>
-                <form action="{{ route('orders.store') }}" method="POST">
+                <form action="{{ route('orders.update', $order) }}" method="POST">
                     @csrf
                     <x-form.select name="client_id" id="client-id" label="Klient">
                         @foreach($clients as $client)

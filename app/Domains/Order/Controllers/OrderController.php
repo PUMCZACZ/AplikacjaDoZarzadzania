@@ -6,10 +6,12 @@ use App\Domains\Admin\Models\Unit;
 use App\Domains\Client\Models\Client;
 use App\Domains\Order\Models\Order;
 use App\Domains\Order\Requests\OrderRequest;
+use App\Domains\Payment\Enums\PaymentStatusEnum;
 use App\Domains\Payment\Models\Payment;
 use App\Domains\Payment\Repository\OrderPaymentCalculationRepository;
 use App\Domains\Payment\Services\PaymentService;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -29,16 +31,25 @@ class OrderController extends Controller
     public function create()
     {
         $clients = Client::get();
-        $units = Unit::get();
 
-        return view('orders.create', compact('clients', 'units'));
+        return view('orders.create', compact('clients', ));
     }
 
     public function store(OrderRequest $request)
     {
-        $order = Order::create($request->validatedExcept('payment_status'));
+        $validated = $request->validatedExcept(['payment_status', 'payment_amount']);
 
-        $this->paymentService->insertPayment($request, $order);
+        $validated['unit_id'] = Unit::where('name', 'kg')->first()->id;
+
+        DB::transaction(function () use($validated, $request) {
+            $order = Order::create($validated);
+
+            if ($request->payment_status === PaymentStatusEnum::ISSUED) {
+                $this->paymentService->insertPayment($request, $order);
+            } else {
+                $this->paymentService->insetFullPayment($order);
+            }
+        });
 
         return redirect()->route('orders.index')->with('success', __("Pomyślnie dodano zamówienie"));
     }
@@ -49,14 +60,19 @@ class OrderController extends Controller
 
         $paymentStatus = Payment::where('order_id', $order->id)->latest()->first();
         $clients = Client::get();
-        $units = Unit::get();
 
-        return view('orders.edit', compact('order', 'clients', 'units', 'paymentStatus'));
+        return view('orders.edit', compact('order', 'clients', 'paymentStatus'));
     }
 
     public function update(Order $order, OrderRequest $request)
     {
-        $order->update($request->validatedExcept('payment_status'));
+        $validated = $request->validatedExcept(['payment_status', 'payment_amount']);
+
+        $validated['unit_id'] = Unit::where('name', 'kg')->first()->id;
+
+        DB::transaction(function () use($validated, $order) {
+            $order->update($validated);
+        });
 
         return redirect()->route('orders.index')->with('success', "Pomyślnie dodano zamówienie");
     }

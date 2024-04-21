@@ -48,6 +48,9 @@
                         @endforeach
                     </x-form.select>
 
+                    <x-form.input type="number" id="payment-amount" name="payment_amount" value="{{ old('payment_amount') }}"
+                                  label="Kwota zapłaty" step="0.01"/>
+
                     <x-form.select name="delivery_method" id="delivery-method" label="Sposób dostawy">
                         @foreach(\App\Domains\Order\Enums\OrderDeliveryMethodEnum::cases() as $deliverMethod)
                             <option value="{{ $deliverMethod->value }}">
@@ -80,6 +83,8 @@
             });
 
             let packageQuantity = $('#package-quantity');
+            let paymentStatus = $('#payment-status');
+            let paymentAmountInput = $('#payment-amount');
 
             function calculateToKilos(orderTypeWeight) {
                 let packageQuantityValue = parseInt(packageQuantity.val());
@@ -89,6 +94,14 @@
                 }
 
                 return packageQuantityValue * orderTypeWeight;
+            }
+
+            function changePaymentAmountInputVisibility() {
+                if (paymentStatus.val() === '{{ \App\Domains\Payment\Enums\PaymentStatusEnum::ISSUED }}') {
+                    paymentAmountInput.closest('div').removeClass('d-none');
+                } else {
+                    paymentAmountInput.closest('div').addClass('d-none');
+                }
             }
 
             packageQuantity.on('change', function () {
@@ -104,6 +117,11 @@
                     $('#quantity').val(calculateToKilos(palleteWeight));
                 }
             });
+
+            paymentStatus.on('change', function () {
+                changePaymentAmountInputVisibility();
+            });
+
         });
     </script>
 @endpush
