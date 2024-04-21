@@ -6,13 +6,17 @@ use App\Domains\Admin\Models\Unit;
 use App\Domains\Client\Models\Client;
 use App\Domains\Order\Models\Order;
 use App\Domains\Order\Requests\OrderRequest;
-use App\Domains\Payment\Actions\PaymentAction;
 use App\Domains\Payment\Models\Payment;
+use App\Domains\Payment\Repository\OrderPaymentCalculationRepository;
+use App\Domains\Payment\Services\PaymentService;
 use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
 {
-    public function __construct(protected PaymentAction $createPaymentAction)
+    public function __construct(
+        protected PaymentService $paymentService,
+        protected OrderPaymentCalculationRepository $orderPaymentCalculationRepository
+    )
     {
     }
     public function index()
@@ -34,7 +38,7 @@ class OrderController extends Controller
     {
         $order = Order::create($request->validatedExcept('payment_status'));
 
-        $this->createPaymentAction->handle($request, $order);
+        $this->paymentService->insertPayment($request, $order);
 
         return redirect()->route('orders.index')->with('success', __("Pomyślnie dodano zamówienie"));
     }
@@ -54,8 +58,6 @@ class OrderController extends Controller
     {
         $order->update($request->validatedExcept('payment_status'));
 
-        $this->createPaymentAction->handle($request, $order);
-
         return redirect()->route('orders.index')->with('success', "Pomyślnie dodano zamówienie");
     }
 
@@ -70,6 +72,8 @@ class OrderController extends Controller
     {
         $order->load('payments');
 
-        return view('orders.show', compact('order'));
+        $paymentInfo = $this->orderPaymentCalculationRepository->getOrderPaymentInfo($order);
+
+        return view('orders.show', compact('order', 'paymentInfo'));
     }
 }

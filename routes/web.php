@@ -42,6 +42,7 @@ Route::middleware(['auth', 'web'])->group(function () {
     Route::prefix('payment')->name('payment.')->group(function () {
         Route::get('/create/{order}', [PaymentController::class, 'create'])->name('create');
         Route::post('/{order}', [PaymentController::class, 'store'])->name('store');
+        Route::post('/fullPayment/{order}', [PaymentController::class, 'fullPayment'])->name('fullPayment');
     });
 });
 
