@@ -94,7 +94,7 @@
                 <tbody>
                 @foreach($order->payments as $payment)
                     <tr>
-                        <td>{{ $loop->index }}</td>
+                        <td>{{ $loop->index + 1 }}</td>
                         <td>{{ $payment->amount }}zł</td>
                         <td>{{ $payment->created_at }}</td>
                     </tr>
@@ -103,60 +103,63 @@
             </table>
         </div>
         <div class="mb-3 text-end">
-            <p class="card-text">Suma płatności: <span>100 zł</span></p>
+            <p class="card-text">Suma płatności: {{ $paymentInfo['payed'] }} zł</p>
             <p class="card-text">Kwota zamówienia: <span>{{ $order->price }} zł</span></p>
-            <p class="card-text {{-- Jeśli pozostało do zapłaty >0 text-danger jeśli = 0 text-success  --}}">Pozostało
-                do zapłaty: <span>1000 zł</span></p>
+            <p class="card-text @if($paymentInfo['toPay'] === 0.0) text-success @else text-danger @endif">
+                Pozostało do zapłaty: {{ $paymentInfo['toPay'] }} zł
+            </p>
         </div>
-        <div class="mb-3 text-end">
+        <div class="d-inline-flex justify-content-end gap-2 mb-3">
             <a class="btn btn-warning" href="{{ route('payment.create', $order) }}" role="button">Dodaj płatność
                 częściową</a>
-            <a class="btn btn-success" href="{{ route('payment.create', $order) }}" role="button">Dodaj płatność
-                całkowitą</a>
+            <form action="{{ route('payment.fullPayment', $order) }}" method="POST">
+                @csrf
+                @method('POST')
+                <button type="submit" class="btn btn-success">Dodaj płatność całkowitą</button>
+            </form>
+        </div>
+    </div>
+    {{-- Wydania --}}
+    <div class="card card shadow-lg p-3 mb-3 bg-body rounded">
+        <div class="card-header shadow p-3 mb-2 bg-body rounded">
+            <h4>
+                <i class="bi bi-box-arrow-right text-danger" style="font-size: 2rem;"> </i>
+                Wydania do zamówienia:
+            </h4>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <td>L.p</td>
+                    <td>Ilość</td>
+                    <td>Termin wydania</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1.</td>
+                    <td>100 kg</td>
+                    <td>12.11.2019</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="mb-3 text-end">
+            <p class="card-text">Suma wydań: <span>100 kg</span></p>
+            <p class="card-text">Ilość z zamówienia: <span>{{ $order->price }} zł</span></p>
+            <p class="card-text {{-- Jeśli pozostało do zapłaty >0 text-danger jeśli = 0 text-success  --}}">Pozostało do
+                wydania: <span>1000 zł</span></p>
+        </div>
+        <div class="d-inline-flex justify-content-end gap-2 mb-3">
+            <a class="btn btn-warning" href="{{ route('payment.create', $order) }}" role="button">Dodaj wydanie
+                częściowe</a>
+            <a class="btn btn-success" href="{{ route('payment.create', $order) }}" role="button">Dodaj wydanie
+                całkowite</a>
         </div>
     </div>
 </div>
 
-    {{-- Wydania --}}
-
-<div class="card card shadow-lg p-3 mb-3 bg-body rounded">
-    <div class="card-header shadow p-3 mb-2 bg-body rounded">
-        <h4>
-            <i class="bi bi-box-arrow-right text-danger" style="font-size: 2rem;"> </i>
-            Wydania do zamówienia:
-        </h4>
-    </div>
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <td>L.p</td>
-                <td>Ilość</td>
-                <td>Termin wydania</td>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>1.</td>
-                <td>100 kg</td>
-                <td>12.11.2019</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="mb-3 text-end">
-        <p class="card-text">Suma wydań: <span>100 kg</span></p>
-        <p class="card-text">Ilość z zamówienia: <span>{{ $order->price }} zł</span></p>
-        <p class="card-text {{-- Jeśli pozostało do zapłaty >0 text-danger jeśli = 0 text-success  --}}">Pozostało do
-            wydania: <span>1000 zł</span></p>
-    </div>
-    <div class="mb-3 text-end">
-        <a class="btn btn-warning" href="{{ route('payment.create', $order) }}" role="button">Dodaj wydanie
-            częściowe</a>
-        <a class="btn btn-success" href="{{ route('payment.create', $order) }}" role="button">Dodaj wydanie
-            całkowite</a>
-    </div>
-</div>
 @endsection
 
 

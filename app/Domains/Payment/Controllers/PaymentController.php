@@ -3,15 +3,15 @@
 namespace App\Domains\Payment\Controllers;
 
 use App\Domains\Order\Models\Order;
-use App\Domains\Payment\Actions\PaymentAction;
 use App\Domains\Payment\Repository\OrderPaymentCalculationRepository;
 use App\Domains\Payment\Requests\PaymentRequest;
+use App\Domains\Payment\Services\PaymentService;
 use App\Http\Controllers\Controller;
 
 class PaymentController extends Controller
 {
     public function __construct(
-        protected PaymentAction                  $paymentAction,
+        protected PaymentService                  $paymentService,
         public OrderPaymentCalculationRepository $orderPaymentCalculationRepository,
     )
     {
@@ -28,16 +28,26 @@ class PaymentController extends Controller
 
     public function store(PaymentRequest $request, Order $order)
     {
-        $paymentInfo = $this->orderPaymentCalculationRepository->getOrderPaymentInfo($order);
-
-        if ($request->amount > $paymentInfo['toPay']) {
-            return back()->withErrors('Zapłacona kwota przekracza wartość zakupu');
+        try {
+            $this->paymentService->insertPayment($request, $order);
+        } catch (\Exception $e) {
+            return back()->withErrors($e->getMessage());
         }
 
-        $this->paymentAction->handle($request, $order);
-
-        return view('payment.create', $order, compact('order', 'paymentInfo'));
+        return view('payment.create', $order, compact('order'));
     }
 
+    public function fullPayment(Order $order)
+    {
+        $order->load('client');
 
+        try {
+            $this->paymentService->insetFullPayment($order);
+        } catch (\Exception $e) {
+            return back()->withErrors($e->getMessage());
+        }
+
+       return redirect()->route('orders.show', $order)
+           ->with('success', 'Pomyślnie zapłaconą całą kwote za zamówienie');
+    }
 }
