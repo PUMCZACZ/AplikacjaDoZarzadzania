@@ -24,10 +24,10 @@ class OrderRequest extends FormRequest
             'quantity' => ['required', 'numeric','min:0.01'],
             'price' => ['required', 'numeric','min:0.01'],
             'deadline' => ['required', 'date'],
-            'unit_id' => ['required', 'exists:units,id'],
             'payment_status' => ['required', PaymentStatusEnum::toValidationRule()],
             'delivery_method' => ['nullable', OrderDeliveryMethodEnum::toValidationRule()],
             'package_quantity' => ['required', 'numeric', 'min:1'],
+            'payment_amount' => ['nullable', 'numeric', 'min:0.01']
         ];
     }
 }

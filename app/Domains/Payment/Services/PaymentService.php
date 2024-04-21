@@ -9,6 +9,7 @@ use App\Domains\Payment\Intrefaces\PaymentInterface;
 use App\Domains\Payment\Models\Payment;
 use App\Domains\Payment\Repository\OrderPaymentCalculationRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PaymentService implements PaymentInterface
 {
@@ -24,11 +25,10 @@ class PaymentService implements PaymentInterface
         if ($this->canInsertPayment($request, $order)) {
             throw new DepositAmountToLargeException('Suma wpłaty przekracza wartość zamówienia');
         }
-
         Payment::create([
             'order_id' => $order->id,
             'client_id' => $order->client_id,
-            'amount' => $request->amount ?? 0,
+            'amount' => $request->payment_amount ?? 0,
         ]);
     }
 
@@ -51,6 +51,6 @@ class PaymentService implements PaymentInterface
     {
         $paymentInfo = $this->orderPaymentCalculationRepository->getOrderPaymentInfo($order);
 
-        return ($request->amount + $paymentInfo['toPay']) <= $order->price;
+        return ($request->payment_amount + $paymentInfo['toPay']) <= $order->price;
     }
 }
