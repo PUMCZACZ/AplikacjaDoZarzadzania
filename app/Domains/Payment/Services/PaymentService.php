@@ -12,10 +12,8 @@ use Illuminate\Http\Request;
 
 class PaymentService implements PaymentInterface
 {
-    protected OrderPaymentCalculationRepository $orderPaymentCalculationRepository;
-    public function __construct()
+    public function __construct(protected OrderPaymentCalculationRepository $orderPaymentCalculationRepository)
     {
-        $this->orderPaymentCalculationRepository = new OrderPaymentCalculationRepository();
     }
 
     /**
@@ -38,7 +36,7 @@ class PaymentService implements PaymentInterface
     {
         $paymentInfo = $this->orderPaymentCalculationRepository->getOrderPaymentInfo($order);
 
-        if ($paymentInfo['toPay'] === 0) {
+        if ($paymentInfo['toPay'] === 0.0) {
             throw new OrderPayedException('To zamówienie jest już uregulowane!');
         }
 

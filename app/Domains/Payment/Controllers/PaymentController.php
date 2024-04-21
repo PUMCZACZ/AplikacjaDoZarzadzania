@@ -47,6 +47,7 @@ class PaymentController extends Controller
             return back()->withErrors($e->getMessage());
         }
 
-       return redirect()->route('orders.show', $order);
+       return redirect()->route('orders.show', $order)
+           ->with('success', 'Pomyślnie zapłaconą całą kwote za zamówienie');
     }
 }
