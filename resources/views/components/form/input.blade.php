@@ -7,5 +7,7 @@
 ])
 <div class="mb-3 {{ $containerClass }}">
     <label class="form-label" for="{{ $name }}">{{ $label }}</label>
-    <input {{ $attributes->merge(['class' => 'form-control']) }} name="{{ $name }}" id="{{ $id }}"/>
+    <input {{ $attributes->merge(['class' => 'form-control']) }} name="{{ $name }}" id="{{ $id }}" type="{{ $type }}"/>
+
+    <x-form.error :name="$name" />
 </div>

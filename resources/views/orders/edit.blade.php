@@ -14,7 +14,7 @@
             <div>
                 <form action="{{ route('orders.update', $order) }}" method="POST">
                     @csrf
-                    <x-form.select name="client_id" id="client-id" label="Klient">
+                    <x-form.select class="select2" name="client_id" id="client-id" label="Klient">
                         @foreach($clients as $client)
                             <option value="{{ old('client_id', $client->id) }}"
                                 @selected($client->id === $order->client->id)>

@@ -14,6 +14,7 @@ class ApiOrderController extends Controller
         $deliveryType = $request->delivery_type;
         $dateFrom = $request->date_from;
         $dateTo = $request->date_to;
+        $realisationStatus = $request->realisation_status;
 
         $data = Order::with('client')
             ->when($dateTo, function ($date) use($dateFrom, $dateTo) {
@@ -25,14 +26,21 @@ class ApiOrderController extends Controller
             ->when($deliveryType !== 'all', function ($deliveryMethod) use($deliveryType) {
                 $deliveryMethod->where('delivery_method', $deliveryType);
             })
+            ->when($realisationStatus === 'realised', function ($realisedOrder) {
+                $realisedOrder->whereNotNull('realised_at');
+            })
+            ->when($realisationStatus === 'no realised', function ($realisedOrder) {
+                $realisedOrder->whereNull('realised_at');
+            })
             ->orderBy('deadline')
             ->get();
 
         $sumPrice = $data->sum('price');
+        $sumKg = $data->sum('quantity');
 
         return fractal()->collection($data)
             ->transformWith(new OrderTransformer())
-            ->addMeta(['sumPrice' => $sumPrice])
+            ->addMeta(['sumPrice' => $sumPrice, 'sumKg' => $sumKg])
             ->toJson();
     }
 }

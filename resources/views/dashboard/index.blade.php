@@ -58,23 +58,30 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-sm-6">
-                        <div class="dates-filters-container">
-                            <label>
+                    <div class="col-12 mb-4">
+                        <div class="d-flex justify-content-between gap-4">
+                            <label class="w-100">
                                 Od
-                                <input id="date_from" type="date" name="date_from" class=""
+                                <input id="date_from" type="date" name="date_from" class="form-control"
                                        value="{{ \Illuminate\Support\Carbon::now()->toDateString() }}"/>
                             </label>
-                            <label>
+                            <label class="w-100">
                                 Do
-                                <input id="date_to" type="date" name="date_to"
+                                <input id="date_to" type="date" name="date_to" class="form-control"
                                        value="{{ \Illuminate\Support\Carbon::now()->toDateString() }}">
                             </label>
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-12 mb-4">
+                        <p>Zrealizowane / Nie Zrealizowane</p>
+                        <select name="reallised_status" id="realised-status" class="form-select shadow">
+                            <option value="realised">Zrealizowane</option>
+                            <option value="no realised">Nie zrealizowane</option>
+                        </select>
+                    </div>
+                    <div class="col-12 mb-5">
                         <p class="mb-2">Kateogria</p>
-                        <select id="delivery-type" class="form-select shadow mb-5">
+                        <select id="delivery-type" class="form-select shadow">
                             <option value="all">Wszystkie</option>
                             @foreach(\App\Domains\Order\Enums\OrderDeliveryMethodEnum::cases() as $orderDeliveryMethod)
                                 <option value="{{ $orderDeliveryMethod->value }}">
@@ -101,9 +108,21 @@
                             </tr>
                             </thead>
                             <tbody>
-
                             </tbody>
                         </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card mt-2 shadow-lg p-3 mb-5 bg-body rounded">
+            <div class="price card-header shadow p-3 mb-4 bg-body rounded">
+                <i class="bi bi-box-seam pd-1 text-danger" style="font-size: 2rem;"> </i>Suma ze wszystkich zamówień
+            </div>
+            <div class="card-body">
+                <div class="row justify-content-center">
+                    <div class="col-6 text-center">
+                        <p class="text-center inline" style="font-size:4rem;" id="sumKg"></p>
+                        <p class="inline" style="font-size:2rem;">kg</p>
                     </div>
                 </div>
             </div>
@@ -131,6 +150,7 @@
         let dateFrom = $('#date_from');
         let dateTo = $('#date_to');
         let materialDemand = $('#material-demand');
+        let realisedStatus = $('#realised-status');
 
         function getDateFrom() {
             return dateFrom.val();
@@ -143,9 +163,17 @@
             return $("#delivery-type").val();
         }
 
+        function getRealisationStatus() {
+            return realisedStatus.val();
+        }
+
         function reloadData() {
             table.ajax.reload();
         }
+
+        realisedStatus.on('change', function () {
+            reloadData();
+        })
 
         dateTo.change(() => {
             reloadData();
@@ -169,10 +197,11 @@
                     data.date_from = getDateFrom();
                     data.date_to = getDateTo();
                     data.delivery_type = getDeliveryType();
+                    data.realisation_status = getRealisationStatus();
                 },
                 dataSrc: function (response) {
                     $('#sumValue').html(response.meta.sumPrice);
-
+                    $('#sumKg').html(response.meta.sumKg);
                     return response.data;
                 }
             },

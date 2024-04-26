@@ -14,7 +14,7 @@
             <div>
                 <form action="{{ route('orders.store') }}" method="POST">
                     @csrf
-                    <x-form.select name="client_id" id="client-id" label="Klient">
+                    <x-form.select class="select2" name="client_id" id="client-id" label="Klient">
                         @foreach($clients as $client)
                             <option value="{{ old('client_id', $client->id) }}">{{ $client->fullName() }}</option>
                         @endforeach

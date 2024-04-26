@@ -9,7 +9,6 @@ use App\Domains\Payment\Intrefaces\PaymentInterface;
 use App\Domains\Payment\Models\Payment;
 use App\Domains\Payment\Repository\OrderPaymentCalculationRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class PaymentService implements PaymentInterface
 {

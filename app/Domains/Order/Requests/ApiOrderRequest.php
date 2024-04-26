@@ -18,6 +18,7 @@ class ApiOrderRequest extends FormRequest
             'date_from' => ['date_format:Y-m-d'],
             'date_to' => ['date_format:Y-m-d'],
             'delivery_type' => ['required', 'in:on site,delivery to client,all'],
+            'realisation_status' => ['nullable', 'in:realised,no realised']
         ];
     }
 }
