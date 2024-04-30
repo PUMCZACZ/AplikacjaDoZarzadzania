@@ -72,6 +72,15 @@
             </label>
             <input class="form-control" value="{{ $order->realised_at ?? 'Nie zrealizowano' }}" disabled/>
         </div>
+        <div class="mt-2">
+            <form action="{{ route('orders.realise', $order) }}" method="POST">
+                @csrf
+                @method('POST')
+                <button type="submit" class="btn btn-primary" onclick="confirm('To ustawi status realizacji na zrealizowane czy jesteś pewien')">
+                    Zrealizuj zamówienie
+                </button>
+            </form>
+        </div>
     </div>
 
     {{-- Płatności --}}
@@ -86,9 +95,9 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <td>L.p</td>
-                    <td>Kwota</td>
-                    <td>Termin wpłaty</td>
+                    <th>L.p</th>
+                    <th>Kwota</th>
+                    <th>Termin wpłaty</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -131,31 +140,36 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <td>L.p</td>
-                    <td>Ilość</td>
-                    <td>Termin wydania</td>
+                    <th>L.p</th>
+                    <th>Ilość</th>
+                    <th>Termin wydania</th>
                 </tr>
                 </thead>
                 <tbody>
+                @foreach($order->releases as $release)
                 <tr>
-                    <td>1.</td>
-                    <td>100 kg</td>
-                    <td>12.11.2019</td>
+                    <td>{{ $loop->index + 1 }}</td>
+                    <td>{{ $release->quantity }} kg</td>
+                    <td>{{ $release->created_at }}</td>
                 </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>
         <div class="mb-3 text-end">
-            <p class="card-text">Suma wydań: <span>100 kg</span></p>
-            <p class="card-text">Ilość z zamówienia: <span>{{ $order->price }} zł</span></p>
-            <p class="card-text {{-- Jeśli pozostało do zapłaty >0 text-danger jeśli = 0 text-success  --}}">Pozostało do
-                wydania: <span>1000 zł</span></p>
+            <p class="card-text">Suma wydań: {{ $releaseInfo['released'] }} kg</p>
+            <p class="card-text">Ilość z zamówienia: {{ $order->quantity }} kg</p>
+            <p class="card-text @if($releaseInfo['forRelease'] != 0) text-danger @else text-success @endif">
+                Pozostało do wydania: {{ $releaseInfo['forRelease'] }} kg</p>
         </div>
         <div class="d-inline-flex justify-content-end gap-2 mb-3">
-            <a class="btn btn-warning" href="{{ route('payment.create', $order) }}" role="button">Dodaj wydanie
+            <a class="btn btn-warning" href="{{ route('release.create', $order) }}" role="button">Dodaj wydanie
                 częściowe</a>
-            <a class="btn btn-success" href="{{ route('payment.create', $order) }}" role="button">Dodaj wydanie
-                całkowite</a>
+            <form action="{{ route('release.fullRelease', $order) }}" method="POST">
+                @csrf
+                @method('POST')
+                <button type="submit" class="btn btn-success">Dodaj wydanie całkowite</button>
+            </form>
         </div>
     </div>
 </div>

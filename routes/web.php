@@ -4,6 +4,7 @@ use App\Domains\Client\Controllers\ClientController;
 use App\Domains\Dashboard\Controllers\DashboardController;
 use App\Domains\Order\Controllers\OrderController;
 use App\Domains\Payment\Controllers\PaymentController;
+use App\Domains\Release\Controllers\ReleaseController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -37,12 +38,19 @@ Route::middleware(['auth', 'web'])->group(function () {
         Route::post('/{order}', [OrderController::class, 'update'])->name('update');
         Route::get('/{order}/show', [OrderController::class, 'show'])->name('show');
         Route::delete('/{order}', [OrderController::class, 'destroy'])->name('destroy');
+        Route::post('/realise/{order}', [OrderController::class, 'realise'])->name('realise');
     });
 
     Route::prefix('payment')->name('payment.')->group(function () {
         Route::get('/create/{order}', [PaymentController::class, 'create'])->name('create');
         Route::post('/{order}', [PaymentController::class, 'store'])->name('store');
-        Route::post('/fullPayment/{order}', [PaymentController::class, 'fullPayment'])->name('fullPayment');
+        Route::post('/full-payment/{order}', [PaymentController::class, 'fullPayment'])->name('fullPayment');
+    });
+
+    Route::prefix('release')->name('release.')->controller(ReleaseController::class)->group(function () {
+        Route::get('/{order}/create', 'create')->name('create');
+        Route::post('/{order}', 'store')->name('store');
+        Route::post('/{order}/full-release', 'fullRelease')->name('fullRelease');
     });
 });
 

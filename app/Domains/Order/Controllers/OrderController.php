@@ -10,14 +10,17 @@ use App\Domains\Payment\Enums\PaymentStatusEnum;
 use App\Domains\Payment\Models\Payment;
 use App\Domains\Payment\Repository\OrderPaymentCalculationRepository;
 use App\Domains\Payment\Services\PaymentService;
+use App\Domains\Release\Repositories\ReleaseRepository;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
     public function __construct(
         protected PaymentService $paymentService,
-        protected OrderPaymentCalculationRepository $orderPaymentCalculationRepository
+        protected OrderPaymentCalculationRepository $orderPaymentCalculationRepository,
+        protected ReleaseRepository $releaseRepository,
     )
     {
     }
@@ -86,10 +89,19 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
-        $order->load('payments');
+        $order->load(['payments', 'releases']);
 
         $paymentInfo = $this->orderPaymentCalculationRepository->getOrderPaymentInfo($order);
+        $releaseInfo = $this->releaseRepository->getOrderReleaseInfo($order);
 
-        return view('orders.show', compact('order', 'paymentInfo'));
+        return view('orders.show', compact('order', 'paymentInfo', 'releaseInfo'));
+    }
+
+    public function realise(Order $order)
+    {
+        $order->realised_at = Carbon::now()->toDateTime();
+        $order->save();
+
+        return redirect()->route('orders.show', $order)->with('success', 'Pomyślnie zmieniono status zamówienia');
     }
 }

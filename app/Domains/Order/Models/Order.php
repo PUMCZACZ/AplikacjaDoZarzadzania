@@ -7,6 +7,7 @@ use App\Domains\Client\Models\Client;
 use App\Domains\Order\Enums\OrderDeliveryMethodEnum;
 use App\Domains\Order\Enums\OrderTypeEnum;
 use App\Domains\Payment\Models\Payment;
+use App\Domains\Release\Models\Release;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -27,6 +28,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon realised_at
  * @property-read Client $client
  * @property-read Unit $unit
+ * @property-read Release $release
  */
 class Order extends Model
 {
@@ -60,5 +62,10 @@ class Order extends Model
     public function deadlineDate(): string
     {
         return Carbon::parse($this->deadline)->format('d-m-Y') ?? '';
+    }
+
+    public function releases(): HasMany
+    {
+        return $this->hasMany(Release::class);
     }
 }
