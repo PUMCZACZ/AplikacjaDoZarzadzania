@@ -31,6 +31,10 @@ class ReleaseService implements ReleaseInterface
     {
         $releaseInfo = $this->releaseRepository->getOrderReleaseInfo($order);
 
+        if ($releaseInfo['forRelease'] == 0) {
+            throw new \Exception('Zamówienie zostało zrealizowane');
+        }
+
         Release::create([
             'order_id' => $order->id,
             'quantity' => $releaseInfo['forRelease'],

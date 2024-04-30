@@ -32,7 +32,11 @@ class ReleaseController extends Controller
             return redirect()->back()->withErrors('Zamówienie zostało już wydane');
         }
 
-        $this->releaseService->insertRelease($order, $request->quantity);
+        try {
+            $this->releaseService->insertRelease($order, $request->quantity);
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage());
+        }
 
         return redirect()->route('orders.show', $order);
     }
@@ -45,7 +49,11 @@ class ReleaseController extends Controller
             return redirect()->back()->withErrors('Zamówienie zostało już wydane');
         }
 
-        $this->releaseService->insertFullRelease($order);
+        try {
+            $this->releaseService->insertFullRelease($order);
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage());
+        }
 
         return redirect()->route('orders.show', $order);
     }
