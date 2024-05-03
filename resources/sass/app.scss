@@ -5,3 +5,9 @@
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+.toast {
+    position: absolute !important;
+    right: 0;
+    z-index: 1;
+}

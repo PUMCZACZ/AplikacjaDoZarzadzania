@@ -16,6 +16,7 @@
 <body>
     @include('layouts.navigation')
     <main>
+        <x-toast/>
         @yield('content')
 
         @stack('body-lower')
