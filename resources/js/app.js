@@ -1,11 +1,24 @@
+// Bootstrap imports
 import './bootstrap';
-
 import 'bootstrap';
-
 import '@popperjs/core';
 
-import Alpine from 'alpinejs';
+import 'primevue/resources/themes/aura-light-green/theme.css';
+import 'primevue/resources/primevue.min.css';
 
-window.Alpine = Alpine;
+// VueJs
+import {createApp} from 'vue';
+import PrimeVue from 'primevue/config';
+import ExportTable from "./components/ExportTable.vue";
+import RealisationSelect from "./components/Dashboard/RealisationSelect.vue";
+import OrderTypeSelect from "./components/Dashboard/OrderTypeSelect.vue";
 
-Alpine.start();
+const vue = createApp();
+
+vue.use(PrimeVue);
+
+vue.component('ExportTable', ExportTable);
+vue.component('RealisationSelect', RealisationSelect);
+vue.component('OrderTypeSelect', OrderTypeSelect);
+
+vue.mount("#app");

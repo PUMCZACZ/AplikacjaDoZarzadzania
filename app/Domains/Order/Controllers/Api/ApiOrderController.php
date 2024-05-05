@@ -11,6 +11,7 @@ class ApiOrderController extends Controller
 {
     public function getOrders(ApiOrderRequest $request)
     {
+//        dd($request);
         $deliveryType = $request->delivery_type;
         $dateFrom = $request->date_from;
         $dateTo = $request->date_to;
@@ -40,7 +41,7 @@ class ApiOrderController extends Controller
 
         return fractal()->collection($data)
             ->transformWith(new OrderTransformer())
-            ->addMeta(['sumPrice' => $sumPrice, 'sumKg' => $sumKg])
+//            ->addMeta(['sumPrice' => $sumPrice, 'sumKg' => $sumKg])
             ->toJson();
     }
 }

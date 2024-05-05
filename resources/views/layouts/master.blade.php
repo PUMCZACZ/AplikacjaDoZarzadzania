@@ -16,10 +16,12 @@
 <body>
     @include('layouts.navigation')
     <main>
-        <x-toast/>
-        @yield('content')
+        <div id="app">
+            <x-toast/>
+            @yield('content')
 
-        @stack('body-lower')
+            @stack('body-lower')
+        </div>
     </main>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
