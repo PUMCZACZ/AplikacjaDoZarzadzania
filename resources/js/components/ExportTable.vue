@@ -2,31 +2,50 @@
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Dropdown from 'primevue/dropdown';
+import OrderStatusSelect from "./Dashboard/OrderStatusSelect.vue";
 import axios from "axios";
-import { ref, onMounted } from 'vue';
+import { reactive, onMounted, ref } from 'vue';
+import OrderDeliveryMethodSelect from "./Dashboard/OrderDeliveryMethodSelect.vue";
 
 const orders = ref([]);
 
-const params = {
+const props = defineProps({
+    deliveryMethods: JSON,
+})
+
+const params = reactive({
     date_from: '2024-03-01',
     date_to: '2024-05-01',
     realisation_status: 'no realised',
     delivery_type: 'on site',
+})
+
+const handleOrderStatusSelectChange = (value) => {
+    params.realisation_status = value;
+    fetchOrders();
+};
+
+const handleOrderDeliverySelectChange = (value) => {
+    console.log(value)
+    params.delivery_type = value;
+    fetchOrders();
 }
 
 function fetchOrders() {
+    console.log(params)
     axios.get('api/dashboard/orders', {params},)
         .then(res => orders.value = res.data.data)
         .catch(error => console.log(error))
 }
 
+
 onMounted(() => fetchOrders());
 
-console.log(orders)
 </script>
 
 <template>
-
+    <OrderStatusSelect @changeOrderStatusSelect="handleOrderStatusSelectChange" />
+    <OrderDeliveryMethodSelect :deliveryMethods="deliveryMethods" @changeOrderDeliveryMethodSelect="handleOrderDeliverySelectChange" />
 
     <data-table :value="orders">
       <column field="id" header="Id"></column>

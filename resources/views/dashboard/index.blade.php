@@ -93,9 +93,9 @@
                 </div>
                 <div class="row p-2">
 
-                    <realisation-select :realisation_statuses="{{ json_encode(\App\Domains\Order\Enums\OrderDeliveryMethodEnum::toArray()) }}"></realisation-select>
-                    <order-type-select :options="{{ $orderTypes }}"></order-type-select>
-                    <export-table></export-table>
+{{--                    <realisation-select ></realisation-select>--}}
+{{--                    <order-type-select :options="{{ $orderTypes }}" :realisation_statuses="{{ json_encode(\App\Domains\Order\Enums\OrderDeliveryMethodEnum::toArray()) }}"></order-type-select>--}}
+                    <export-table :delivery-methods="{{ json_encode(\App\Domains\Order\Enums\OrderDeliveryMethodEnum::toArray()) }}"></export-table>
 
 
 {{--                    <div class="table-responsive">--}}

@@ -10,8 +10,8 @@ import 'primevue/resources/primevue.min.css';
 import {createApp} from 'vue';
 import PrimeVue from 'primevue/config';
 import ExportTable from "./components/ExportTable.vue";
-import RealisationSelect from "./components/Dashboard/RealisationSelect.vue";
-import OrderTypeSelect from "./components/Dashboard/OrderTypeSelect.vue";
+import RealisationSelect from "./components/Dashboard/OrderDeliveryMethodSelect.vue";
+import OrderTypeSelect from "./components/Dashboard/OrderStatusSelect.vue";
 
 const vue = createApp();
 
