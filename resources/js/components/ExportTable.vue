@@ -26,14 +26,12 @@ const handleOrderStatusSelectChange = (value) => {
 };
 
 const handleOrderDeliverySelectChange = (value) => {
-    console.log(value)
     params.delivery_type = value;
     fetchOrders();
 }
 
-function fetchOrders() {
-    console.log(params)
-    axios.get('api/dashboard/orders', {params},)
+const fetchOrders = () => {
+    axios.post('api/dashboard/orders', {params},)
         .then(res => orders.value = res.data.data)
         .catch(error => console.log(error))
 }
@@ -45,7 +43,10 @@ onMounted(() => fetchOrders());
 
 <template>
     <OrderStatusSelect @changeOrderStatusSelect="handleOrderStatusSelectChange" />
-    <OrderDeliveryMethodSelect :deliveryMethods="deliveryMethods" @changeOrderDeliveryMethodSelect="handleOrderDeliverySelectChange" />
+
+    <OrderDeliveryMethodSelect :deliveryMethods="deliveryMethods" @changeOrderDeliveryMethodSelect="handleOrderDeliverySelectChange"/>
+
+    {{ params }}
 
     <data-table :value="orders">
       <column field="id" header="Id"></column>

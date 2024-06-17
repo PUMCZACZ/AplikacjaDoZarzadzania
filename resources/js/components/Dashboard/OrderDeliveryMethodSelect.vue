@@ -10,8 +10,7 @@ const props = defineProps({
 const emits = defineEmits(['changeOrderDeliveryMethodSelect']);
 
 const handleSelect = (event) => {
-    console.log(event)
-    emits('changeOrderDeliveryMethodSelect', event.value);
+    emits('changeOrderDeliveryMethodSelect', event.target.value);
 };
 
 </script>

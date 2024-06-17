@@ -20,6 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::prefix('dashboard')->name('dashboard.')->group(function () {
-    Route::get('/orders', [ApiOrderController::class, 'getOrders'])->name('get.orders');
+    Route::post('/orders', [ApiOrderController::class, 'getOrders'])->name('get.orders');
     });
 
