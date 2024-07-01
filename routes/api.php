@@ -1,6 +1,6 @@
 <?php
 
-use App\Domains\Order\Controllers\Api\ApiOrderController;
+use App\Domains\Order\Controllers\Api\OrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::prefix('dashboard')->name('dashboard.')->group(function () {
-    Route::get('/orders', [ApiOrderController::class, 'getOrders'])->name('get.orders');
-    });
+    Route::post('/orders', [OrderController::class, 'getOrders'])->name('get.orders');
+});
 

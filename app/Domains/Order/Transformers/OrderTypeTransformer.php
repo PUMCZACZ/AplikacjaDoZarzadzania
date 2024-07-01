@@ -2,11 +2,12 @@
 
 namespace App\Domains\Order\Transformers;
 
+use App\Domains\Order\Enums\OrderTypeEnum;
 use App\Domains\Order\Models\Order;
 use Carbon\Carbon;
 use League\Fractal\TransformerAbstract;
 
-class OrderTransformer extends TransformerAbstract
+class OrderTypeTransformer extends TransformerAbstract
 {
     /**
      * List of resources to automatically include
@@ -31,17 +32,11 @@ class OrderTransformer extends TransformerAbstract
      *
      * @return array
      */
-    public function transform(Order $order): array
+    public function transform(OrderTypeEnum $orderTypeEnum): array
     {
         return [
-            'id' => $order->id,
-            'client' => $order->client->fullName(),
-            'order_name' => $order->order_name,
-            'order_type' => $order->order_type->translate(),
-            'quantity' => $order->quantity,
-//            'unit' => $order->unit?->name,
-            'price' => $order->price . 'zł',
-            'deadline' => Carbon::parse($order->deadline)->format('d-m-Y') ?? '',
+            'value' => $orderTypeEnum->value,
+            'name' => $orderTypeEnum->translate(),
         ];
     }
 }

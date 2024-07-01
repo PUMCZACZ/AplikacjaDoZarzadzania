@@ -93,24 +93,29 @@
                 </div>
                 <div class="row p-2">
 
-                    <div class="table-responsive">
-                        <table id="datatable" class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th scope="col" class="">{{ __('Id') }}</th>
-                                <th scope="col" class="">{{ __('Klient') }}</th>
-                                <th scope="col" class="">{{ __('Nazwa Zamówienia') }}</th>
-                                <th scope="col" class="">{{ __('Typ Zamówienia') }}</th>
-                                <th scope="col" class="">{{ __('Ilość') }}</th>
-                                <th scope="col" class="">{{ __('J.M') }}</th>
-                                <th scope="col" class="">{{ __('Cena') }}</th>
-                                <th scope="col" class="">{{ __('Termin Realizacji') }}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
+{{--                    <realisation-select ></realisation-select>--}}
+{{--                    <order-type-select :options="{{ $orderTypes }}" :realisation_statuses="{{ json_encode(\App\Domains\Order\Enums\OrderDeliveryMethodEnum::toArray()) }}"></order-type-select>--}}
+                    <export-table :delivery-methods="{{ json_encode(\App\Domains\Order\Enums\OrderDeliveryMethodEnum::toArray()) }}"></export-table>
+
+
+{{--                    <div class="table-responsive">--}}
+{{--                        <table id="datatable" class="table table-striped">--}}
+{{--                            <thead>--}}
+{{--                            <tr>--}}
+{{--                                <th scope="col" class="">{{ __('Id') }}</th>--}}
+{{--                                <th scope="col" class="">{{ __('Klient') }}</th>--}}
+{{--                                <th scope="col" class="">{{ __('Nazwa Zamówienia') }}</th>--}}
+{{--                                <th scope="col" class="">{{ __('Typ Zamówienia') }}</th>--}}
+{{--                                <th scope="col" class="">{{ __('Ilość') }}</th>--}}
+{{--                                <th scope="col" class="">{{ __('J.M') }}</th>--}}
+{{--                                <th scope="col" class="">{{ __('Cena') }}</th>--}}
+{{--                                <th scope="col" class="">{{ __('Termin Realizacji') }}</th>--}}
+{{--                            </tr>--}}
+{{--                            </thead>--}}
+{{--                            <tbody>--}}
+{{--                            </tbody>--}}
+{{--                        </table>--}}
+{{--                    </div>--}}
                 </div>
             </div>
         </div>
