@@ -18,7 +18,7 @@ const handleSelect = (event) => {
 <template>
     <div>
         <label class="form-label">Kategoria</label>
-        <select v-model="selected_value" @change="handleSelect" class="form-select shadow mb-2">
+        <select v-model="selected_value" @change="handleSelect" class="form-select shadow">
             <option value="all" selected>Wszystkie</option>
             <option v-for="(name, key) in deliveryMethods" :value="key">{{ name }}</option>
         </select>

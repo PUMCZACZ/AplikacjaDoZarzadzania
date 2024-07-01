@@ -7,15 +7,16 @@ use App\Domains\Order\Requests\ApiOrderRequest;
 use App\Domains\Order\Transformers\OrderTransformer;
 use App\Http\Controllers\Controller;
 
-class ApiOrderController extends Controller
+class OrderController extends Controller
 {
-    public function getOrders(ApiOrderRequest $request)
+    public function getOrders(ApiOrderRequest $request): string
     {
-//        dd($request);
-        $deliveryType = $request->delivery_type;
-        $dateFrom = $request->date_from;
-        $dateTo = $request->date_to;
-        $realisationStatus = $request->realisation_status;
+        $validated = $request->validated();
+
+        $deliveryType = $validated['delivery_type'];
+        $dateFrom = $validated['date_from'];
+        $dateTo = $validated['date_to'];
+        $realisationStatus = $validated['realisation_status'];
 
         $data = Order::with('client')
             ->when($dateTo, function ($date) use($dateFrom, $dateTo) {
@@ -41,7 +42,7 @@ class ApiOrderController extends Controller
 
         return fractal()->collection($data)
             ->transformWith(new OrderTransformer())
-//            ->addMeta(['sumPrice' => $sumPrice, 'sumKg' => $sumKg])
+            ->addMeta(['sumPrice' => $sumPrice, 'sumKg' => $sumKg])
             ->toJson();
     }
 }

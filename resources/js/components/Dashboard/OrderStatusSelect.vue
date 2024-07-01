@@ -2,24 +2,31 @@
 import Dropdown from 'primevue/dropdown';
 import {ref} from "vue";
 
-const selectedValue = ref('realised');
+const selectedValue = ref('no realised');
 
 const orderStatuses = ref([
-    { name: 'Zrealizowane', value: 'realised' },
     { name: 'Nie zrealizowane', value: 'no realised' },
+    { name: 'Zrealizowane', value: 'realised' },
 ]);
 
 const emits = defineEmits(['changeOrderStatusSelect']);
 
-const handleChange = (event) => {
-    console.log(event)
-    emits('changeOrderStatusSelect', event.value);
+const handleSelect = (event) => {
+    emits('changeOrderStatusSelect', event.target.value);
 };
 </script>
 
 <template>
-    <Dropdown v-model="selectedValue" :options="orderStatuses" optionLabel="name"
-              option-value="value" @change="handleChange"></Dropdown>
+    <div class="mb-3">
+        <label class="mb-1">Zrealizowane / Nie Zrealizowane</label>
+        <select v-model="selectedValue" @change="handleSelect" class="form-select shadow">
+            <option v-for="status in orderStatuses"
+                    :value="status.value"
+                    :selected="status.value === selectedValue">
+                {{ status.name }}
+            </option>
+        </select>
+    </div>
 </template>
 
 <style scoped>
