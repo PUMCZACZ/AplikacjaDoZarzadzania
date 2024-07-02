@@ -58,65 +58,9 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-12 mb-4">
-                        <div class="d-flex justify-content-between gap-4">
-                            <label class="w-100">
-                                Od
-                                <input id="date_from" type="date" name="date_from" class="form-control"
-                                       value="{{ \Illuminate\Support\Carbon::now()->toDateString() }}"/>
-                            </label>
-                            <label class="w-100">
-                                Do
-                                <input id="date_to" type="date" name="date_to" class="form-control"
-                                       value="{{ \Illuminate\Support\Carbon::now()->toDateString() }}">
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-12 mb-4">
-                        <p>Zrealizowane / Nie Zrealizowane</p>
-                        <select name="reallised_status" id="realised-status" class="form-select shadow">
-                            <option value="realised">Zrealizowane</option>
-                            <option value="no realised">Nie zrealizowane</option>
-                        </select>
-                    </div>
-                    <div class="col-12 mb-5">
-                        <p class="mb-2">Kateogria</p>
-                        <select id="delivery-type" class="form-select shadow">
-                            <option value="all">Wszystkie</option>
-                            @foreach(\App\Domains\Order\Enums\OrderDeliveryMethodEnum::cases() as $orderDeliveryMethod)
-                                <option value="{{ $orderDeliveryMethod->value }}">
-                                    {{ $orderDeliveryMethod->translate() }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="row p-2">
-
-{{--                    <realisation-select ></realisation-select>--}}
-{{--                    <order-type-select :options="{{ $orderTypes }}" :realisation_statuses="{{ json_encode(\App\Domains\Order\Enums\OrderDeliveryMethodEnum::toArray()) }}"></order-type-select>--}}
-                    <export-table :delivery-methods="{{ json_encode(\App\Domains\Order\Enums\OrderDeliveryMethodEnum::toArray()) }}"></export-table>
-
-
-{{--                    <div class="table-responsive">--}}
-{{--                        <table id="datatable" class="table table-striped">--}}
-{{--                            <thead>--}}
-{{--                            <tr>--}}
-{{--                                <th scope="col" class="">{{ __('Id') }}</th>--}}
-{{--                                <th scope="col" class="">{{ __('Klient') }}</th>--}}
-{{--                                <th scope="col" class="">{{ __('Nazwa Zamówienia') }}</th>--}}
-{{--                                <th scope="col" class="">{{ __('Typ Zamówienia') }}</th>--}}
-{{--                                <th scope="col" class="">{{ __('Ilość') }}</th>--}}
-{{--                                <th scope="col" class="">{{ __('J.M') }}</th>--}}
-{{--                                <th scope="col" class="">{{ __('Cena') }}</th>--}}
-{{--                                <th scope="col" class="">{{ __('Termin Realizacji') }}</th>--}}
-{{--                            </tr>--}}
-{{--                            </thead>--}}
-{{--                            <tbody>--}}
-{{--                            </tbody>--}}
-{{--                        </table>--}}
-{{--                    </div>--}}
-                </div>
+                    <export-table
+                        :delivery-methods="{{ json_encode(\App\Domains\Order\Enums\OrderDeliveryMethodEnum::toArray()) }}">
+                    </export-table>
             </div>
         </div>
         <div class="card mt-2 shadow-lg p-3 mb-5 bg-body rounded">

@@ -29,9 +29,6 @@ class DashboardController extends Controller
             ->toJson();
 
 
-//        dd($orderTypes);
-
-
         return view('dashboard.index', compact([
             'nextMonthDemand',
             'nextTwoMonthDemand',

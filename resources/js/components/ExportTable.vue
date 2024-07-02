@@ -6,7 +6,10 @@ import OrderDeliveryMethodSelect from "./Dashboard/OrderDeliveryMethodSelect.vue
 import DatePicker from "./Dashboard/DatePicker.vue";
 import { FilterMatchMode } from 'primevue/api';
 
-const orders = ref([]);
+const orders = ref({
+    data: [],
+    meta: {}
+});
 
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -47,7 +50,10 @@ const handleChangeDateTo = (value) => {
 
 const fetchOrders = () => {
     axios.post('api/dashboard/orders', params,)
-        .then(res => orders.value = res.data.data)
+        .then(res => {
+            orders.value.data = res.data.data;
+            orders.value.meta = res.data.meta;
+        })
         .catch(error => console.log(error))
 }
 
@@ -60,13 +66,13 @@ onMounted(() => fetchOrders());
         <DatePicker label="Od" @changeDate="handleChangeDateFrom"/>
         <DatePicker label="Do" @changeDate="handleChangeDateTo"/>
     </div>
-    <div class="mb-5">
+    <div class="mb-4">
         <OrderStatusSelect @changeOrderStatusSelect="handleOrderStatusSelectChange" />
 
         <OrderDeliveryMethodSelect :deliveryMethods="deliveryMethods" @changeOrderDeliveryMethodSelect="handleOrderDeliverySelectChange"/>
     </div>
 
-    <DataTable v-model:filters="filters" :value="orders"
+    <DataTable v-model:filters="filters" :value="orders.data"
                :globalFilterFields="['client', 'order_name', 'order_type', 'quantity', 'price', 'deadline']"
                :pt="{table: 'table table-striped'}">
         <template #header>
