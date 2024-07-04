@@ -1,15 +1,17 @@
 <script setup>
 import OrderStatusSelect from "./Dashboard/OrderStatusSelect.vue";
 import axios from "axios";
-import { reactive, onMounted, ref } from 'vue';
+import { reactive, onMounted, ref, provide } from 'vue';
 import OrderDeliveryMethodSelect from "./Dashboard/OrderDeliveryMethodSelect.vue";
 import DatePicker from "./Dashboard/DatePicker.vue";
 import { FilterMatchMode } from 'primevue/api';
 
 const orders = ref({
     data: [],
-    meta: {}
+    meta: {},
 });
+
+provide('orders', orders.value);
 
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
