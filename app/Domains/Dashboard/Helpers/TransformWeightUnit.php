@@ -2,7 +2,7 @@
 
 namespace App\Domains\Dashboard\Helpers;
 
-class TransformKiloToTonsHelper
+class TransformWeightUnit
 {
     public const TONE = 1000;
     public static function toTons(float $kilos): string

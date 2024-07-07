@@ -1,8 +1,5 @@
 <script setup>
-import { inject } from 'vue';
 
-const orders = inject('orders');
-console.log(orders)
 </script>
 
 <template>

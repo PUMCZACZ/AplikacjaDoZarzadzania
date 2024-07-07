@@ -18,6 +18,7 @@ import DatePicker from "./components/Dashboard/DatePicker.vue";
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import ViewSumWeight from "./components/Dashboard/ViewSumWeight.vue";
+import Dashboard from "./components/Dashboard/Dashboard.vue";
 
 
 const app = createApp();
@@ -30,6 +31,7 @@ app.component('RealisationSelect', RealisationSelect);
 app.component('OrderTypeSelect', OrderTypeSelect);
 app.component('DatePicker', DatePicker);
 app.component('ViewSumWeight', ViewSumWeight);
+app.component('Dashboard', Dashboard);
 
 // PrimeVue components
 app.component('DataTable', DataTable);

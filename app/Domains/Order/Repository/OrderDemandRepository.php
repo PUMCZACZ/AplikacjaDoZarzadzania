@@ -2,11 +2,21 @@
 
 namespace App\Domains\Order\Repository;
 
+use App\Domains\Dashboard\Helpers\TransformWeightUnit;
 use App\Domains\Order\Models\Order;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 
 class OrderDemandRepository
 {
+    public function getDemands(): Collection
+    {
+        return collect([
+            'demand' => TransformWeightUnit::toTons($this->materialDemand()),
+            'nextMonthDemand' => TransformWeightUnit::toTons($this->getNextMonthOrdersDemandSum()),
+            'nextTwoMonthDemand' => TransformWeightUnit::toTons($this->getNextTwoMonthOrdersDemandSum()),
+        ]);
+    }
     public function getNextMonthOrdersDemandSum(): float
     {
         $nextMonth = Carbon::now()->addMonth();

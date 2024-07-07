@@ -7,6 +7,8 @@
 @endpush
 
 @section('content')
+    <Dashboard></Dashboard>
+
     <div class="container">
         <div class="row mt-4">
             <div class="col-sm-12">
@@ -21,7 +23,7 @@
                                     Aktualny miesiąc
                                 </div>
                                 <div class="card-body mb-2">
-                                    {{ $materialDemand }}
+{{--                                    {{ $materialDemand }}--}}
                                 </div>
                             </div>
                         </div>
@@ -31,7 +33,7 @@
                                     Następny miesiąc
                                 </div>
                                 <div class="card-body mb-2">
-                                    {{ $nextMonthDemand }}
+{{--                                    {{ $nextMonthDemand }}--}}
                                 </div>
                             </div>
                         </div>
@@ -41,7 +43,7 @@
                                     Za 2 miesiące
                                 </div>
                                 <div class="card-body mb-2">
-                                    {{ $nextTwoMonthDemand }}
+{{--                                    {{ $nextTwoMonthDemand }}--}}
                                 </div>
                             </div>
                         </div>

@@ -21,5 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('dashboard')->name('dashboard.')->group(function () {
     Route::post('/orders', [OrderController::class, 'getOrders'])->name('get.orders');
+    Route::get('/data', [\App\Domains\Dashboard\Controllers\Api\DashboardController::class, 'data'])->name('get.data');
 });
 
