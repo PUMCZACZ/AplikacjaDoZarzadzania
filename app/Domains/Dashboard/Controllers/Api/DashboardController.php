@@ -2,6 +2,7 @@
 
 namespace App\Domains\Dashboard\Controllers\Api;
 
+use App\Domains\Order\Enums\OrderDeliveryMethodEnum;
 use App\Domains\Order\Enums\OrderTypeEnum;
 use App\Domains\Order\Repository\OrderDemandRepository;
 use App\Domains\Order\Transformers\OrderTypeTransformer;
@@ -23,9 +24,12 @@ class DashboardController extends Controller
             ->serializeWith(new JsonSerializer())
             ->toArray();
 
+        $deliveryMethods = OrderDeliveryMethodEnum::toArray();
+
         return response()->json([
             'demands' => $demands,
             'orderTypes' => $orderTypes,
+            'deliveryMethods' => $deliveryMethods,
         ]);
     }
 }

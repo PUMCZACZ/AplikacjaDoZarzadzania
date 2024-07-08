@@ -1,7 +1,7 @@
 <script setup>
 import OrderStatusSelect from "./Dashboard/OrderStatusSelect.vue";
 import axios from "axios";
-import { reactive, onMounted, ref, provide } from 'vue';
+import { reactive, onMounted, ref, inject } from 'vue';
 import OrderDeliveryMethodSelect from "./Dashboard/OrderDeliveryMethodSelect.vue";
 import DatePicker from "./Dashboard/DatePicker.vue";
 import { FilterMatchMode } from 'primevue/api';
@@ -10,8 +10,6 @@ const orders = ref({
     data: [],
     meta: {},
 });
-
-provide('orders', orders.value);
 
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -64,6 +62,7 @@ onMounted(() => fetchOrders());
 </script>
 
 <template>
+
     <div class="d-flex flex-column flex-sm-row gap-3 mb-3">
         <DatePicker label="Od" @changeDate="handleChangeDateFrom"/>
         <DatePicker label="Do" @changeDate="handleChangeDateTo"/>

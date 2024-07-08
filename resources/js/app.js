@@ -17,7 +17,7 @@ import OrderTypeSelect from "./components/Dashboard/OrderStatusSelect.vue";
 import DatePicker from "./components/Dashboard/DatePicker.vue";
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import ViewSumWeight from "./components/Dashboard/ViewSumWeight.vue";
+import ViewSumWeight from "./components/Dashboard/WeightCard.vue";
 import Dashboard from "./components/Dashboard/Dashboard.vue";
 
 

@@ -1,7 +1,7 @@
 <script setup>
-const props = defineProps({
-    demands: JSON,
-})
+import {inject} from "vue";
+
+const demands = inject('data');
 </script>
 
 <template>
@@ -19,7 +19,7 @@ const props = defineProps({
                                     Aktualny miesiąc
                                 </div>
                                 <div class="card-body mb-2">
-                                    {{ demands.demand }} kg
+                                    {{ demands.demand }}
                                 </div>
                             </div>
                         </div>
@@ -29,7 +29,7 @@ const props = defineProps({
                                     Następny miesiąc
                                 </div>
                                 <div class="card-body mb-2">
-                                    {{ demands.nextMonthDemand }} kg
+                                    {{ demands.nextMonthDemand }}
                                 </div>
                             </div>
                         </div>
@@ -39,7 +39,7 @@ const props = defineProps({
                                     Za 2 miesiące
                                 </div>
                                 <div class="card-body mb-2">
-                                    {{ demands.nextTwoMonthDemand }} kg
+                                    {{ demands.nextTwoMonthDemand }}
                                 </div>
                             </div>
                         </div>

@@ -15,24 +15,8 @@ use League\Fractal\Serializer\JsonApiSerializer;
 
 class DashboardController extends Controller
 {
-    public function __construct(public OrderDemandRepository $demandRepository)
-    {
-    }
-
     public function index()
     {
-        $demands = fractal()->item($this->demandRepository->getDemands())
-            ->transformWith(new DemandTransformer())
-            ->serializeWith(new JsonSerializer())
-            ->toJson();
-
-        $demands = $this->demandRepository->getDemands();
-
-        $orderTypes = fractal()->collection(OrderTypeEnum::cases())
-            ->transformWith(new OrderTypeTransformer())
-            ->serializeWith(new JsonSerializer())
-            ->toJson();
-
-        return view('dashboard.index', compact(['orderTypes', 'demands']));
+        return view('dashboard.index');
     }
 }

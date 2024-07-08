@@ -10,7 +10,7 @@
         <div class="row justify-content-center">
             <div class="col-6 text-center">
                 <p class="text-center inline" style="font-size:4rem;"></p>
-                <p class="inline" style="font-size:2rem;">kg</p>
+                <p class="inline" style="font-size:2rem;">15 kg</p>
             </div>
         </div>
     </div>

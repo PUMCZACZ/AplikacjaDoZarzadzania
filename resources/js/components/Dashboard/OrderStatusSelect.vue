@@ -9,8 +9,6 @@ const orderStatuses = ref([
     { name: 'Zrealizowane', value: 'realised' },
 ]);
 
-const orders = inject('orders');
-
 const emits = defineEmits(['changeOrderStatusSelect']);
 
 const handleSelect = (event) => {
@@ -19,7 +17,6 @@ const handleSelect = (event) => {
 </script>
 
 <template>
-    {{ orders.meta.sumPrice }}
     <div class="mb-3">
         <label class="mb-1">Zrealizowane / Nie Zrealizowane</label>
         <select v-model="selectedValue" @change="handleSelect" class="form-select shadow">
