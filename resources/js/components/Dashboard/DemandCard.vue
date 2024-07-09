@@ -1,7 +1,7 @@
 <script setup>
 import {inject} from "vue";
 
-const demands = inject('data');
+const data = inject('data');
 </script>
 
 <template>
@@ -19,7 +19,7 @@ const demands = inject('data');
                                     Aktualny miesiąc
                                 </div>
                                 <div class="card-body mb-2">
-                                    {{ demands.demand }}
+                                    {{ data.demands.demand }}
                                 </div>
                             </div>
                         </div>
@@ -29,7 +29,7 @@ const demands = inject('data');
                                     Następny miesiąc
                                 </div>
                                 <div class="card-body mb-2">
-                                    {{ demands.nextMonthDemand }}
+                                    {{ data.demands.nextMonthDemand }}
                                 </div>
                             </div>
                         </div>
@@ -39,7 +39,7 @@ const demands = inject('data');
                                     Za 2 miesiące
                                 </div>
                                 <div class="card-body mb-2">
-                                    {{ demands.nextTwoMonthDemand }}
+                                    {{ data.demands.nextTwoMonthDemand }}
                                 </div>
                             </div>
                         </div>

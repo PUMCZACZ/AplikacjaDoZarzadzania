@@ -1,5 +1,7 @@
 <script setup>
-
+const props = defineProps({
+    value: Number,
+})
 </script>
 
 <template>
@@ -11,7 +13,7 @@
             <div class="row justify-content-center">
                 <div class="col-6 text-center">
                     <p class="text-center inline" style="font-size:4rem;" id="sumValue"></p>
-                    <p class="inline" style="font-size:2rem;">20 zł</p>
+                    <p class="inline" style="font-size:2rem;">{{ value }} zł</p>
                 </div>
             </div>
         </div>

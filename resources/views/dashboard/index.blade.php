@@ -7,14 +7,8 @@
 @endpush
 
 @section('content')
-
-
     <div class="container">
         <Dashboard></Dashboard>
-        <div class="card mt-2 shadow-lg p-3 mb-5 bg-body rounded">
-            <view-sum-weight></view-sum-weight>
-        </div>
-
     </div>
 @endsection
 

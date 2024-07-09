@@ -9,7 +9,18 @@ import SumPriceCard from "./SumPriceCard.vue";
 
 const data = ref();
 
+provide('data', data);
+
 const dataLoaded = ref(false);
+
+const meta = ref({
+    sumKg: 0,
+    sumPrice: 0,
+});
+
+const handleAssignOrderMeta = (event) => {
+    meta.value = event;
+};
 
 onMounted(() => {
     axios.get('api/dashboard/data')
@@ -20,14 +31,14 @@ onMounted(() => {
         .catch(error => console.log(error));
 });
 
-provide('data', data);
 </script>
 
 <template>
     <DemandCard v-if="dataLoaded" />
-    <ExportCard v-if="dataLoaded" />
-    <WeightCard v-if="dataLoaded" />
-    <SumPriceCard v-if="dataLoaded" />
+    <ExportCard v-if="dataLoaded" @emitOrderMeta="handleAssignOrderMeta" />
+    <WeightCard v-if="dataLoaded" :value="meta.sumKg" />
+    <SumPriceCard v-if="dataLoaded" :value="meta.sumPrice" />
+
 
 </template>
 

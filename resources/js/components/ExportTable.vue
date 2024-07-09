@@ -11,6 +11,8 @@ const orders = ref({
     meta: {},
 });
 
+const emits = defineEmits(['emitOrderMeta']);
+
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
@@ -53,6 +55,7 @@ const fetchOrders = () => {
         .then(res => {
             orders.value.data = res.data.data;
             orders.value.meta = res.data.meta;
+            emits('emitOrderMeta', res.data.meta)
         })
         .catch(error => console.log(error))
 }
