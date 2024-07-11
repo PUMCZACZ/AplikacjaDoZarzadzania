@@ -7,21 +7,11 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-        <!-- Scripts -->
         @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     </head>
-    <body class="container">
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex justify-content-center">
-                    {{ $slot }}
-                </div>
-            </div>
-
+    <body>
+        <div id="app">
+            <Login form_route="{{ route('login.store')}}"></Login>
         </div>
     </body>
 </html>

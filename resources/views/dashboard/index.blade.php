@@ -7,7 +7,7 @@
 @endpush
 
 @section('content')
-    <div class="container">
+    <div class="">
         <Dashboard></Dashboard>
     </div>
 @endsection

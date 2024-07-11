@@ -20,6 +20,11 @@ import Column from 'primevue/column';
 import ViewSumWeight from "./components/Dashboard/WeightCard.vue";
 import Dashboard from "./components/Dashboard/Dashboard.vue";
 
+// Sakai imports
+import '@sakai/assets/styles.scss';
+import Login from "@sakai/views/pages/auth/Login.vue";
+import AppMenu from "@sakai/layout/AppMenu.vue";
+
 
 const app = createApp();
 
@@ -33,8 +38,12 @@ app.component('DatePicker', DatePicker);
 app.component('ViewSumWeight', ViewSumWeight);
 app.component('Dashboard', Dashboard);
 
+
 // PrimeVue components
 app.component('DataTable', DataTable);
 app.component('Column', Column);
+
+// Sakai components
+app.component('Login', Login);
 
 app.mount("#app");

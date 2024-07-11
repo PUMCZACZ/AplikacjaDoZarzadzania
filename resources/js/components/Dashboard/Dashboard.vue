@@ -6,6 +6,7 @@ import ExportCard from "./ExportCard.vue";
 import ViewSumWeightCard from "./WeightCard.vue";
 import WeightCard from "./WeightCard.vue";
 import SumPriceCard from "./SumPriceCard.vue";
+import AppSidebar from "@sakai/layout/AppSidebar.vue";
 
 const data = ref();
 
@@ -34,6 +35,7 @@ onMounted(() => {
 </script>
 
 <template>
+    <AppSidebar />
     <DemandCard v-if="dataLoaded" />
     <ExportCard v-if="dataLoaded" @emitOrderMeta="handleAssignOrderMeta" />
     <div class="d-flex-column d-sm-flex gap-sm-2 justify-content-between">
