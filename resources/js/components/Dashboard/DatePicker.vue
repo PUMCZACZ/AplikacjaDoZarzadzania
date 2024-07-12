@@ -15,9 +15,15 @@ const changeDate = (event) => {
 </script>
 
 <template>
-    <div class="d-flex flex-column w-100">
-        <label class="mb-1">{{ label }}</label>
-        <input type="date" v-model="date" class="form-control" @change="changeDate"/>
+    <div class="col-6">
+        <div class="surface-card shadow-2 p-3 border-round">
+            <div>
+                <span class="block text-500 font-medium mb-3">{{ label }}</span>
+                <div class="text-900 font-medium text-xl">
+                    <Calendar v-model="date" @change="changeDate" dateFormat="yy/mm/dd"/>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 

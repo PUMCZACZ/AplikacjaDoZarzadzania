@@ -5,6 +5,7 @@ import { reactive, onMounted, ref, inject } from 'vue';
 import OrderDeliveryMethodSelect from "./Dashboard/OrderDeliveryMethodSelect.vue";
 import DatePicker from "./Dashboard/DatePicker.vue";
 import { FilterMatchMode } from 'primevue/api';
+import Calendar from "primevue/calendar";
 
 const orders = ref({
     data: [],
@@ -65,15 +66,15 @@ onMounted(() => fetchOrders());
 </script>
 
 <template>
-
-    <div class="d-flex flex-column flex-sm-row gap-3 mb-3">
+    <div class="grid">
         <DatePicker label="Od" @changeDate="handleChangeDateFrom"/>
         <DatePicker label="Do" @changeDate="handleChangeDateTo"/>
+        <OrderStatusSelect @changeOrderStatusSelect="handleOrderStatusSelectChange" />
+        <OrderDeliveryMethodSelect :deliveryMethods="deliveryMethods" @changeOrderDeliveryMethodSelect="handleOrderDeliverySelectChange"/>
     </div>
     <div class="mb-4">
-        <OrderStatusSelect @changeOrderStatusSelect="handleOrderStatusSelectChange" />
 
-        <OrderDeliveryMethodSelect :deliveryMethods="deliveryMethods" @changeOrderDeliveryMethodSelect="handleOrderDeliverySelectChange"/>
+
     </div>
 
     <DataTable v-model:filters="filters" :value="orders.data"

@@ -17,15 +17,19 @@ const handleSelect = (event) => {
 </script>
 
 <template>
-    <div class="mb-3">
-        <label class="mb-1">Zrealizowane / Nie Zrealizowane</label>
-        <select v-model="selectedValue" @change="handleSelect" class="form-select shadow">
-            <option v-for="status in orderStatuses"
-                    :value="status.value"
-                    :selected="status.value === selectedValue">
-                {{ status.name }}
-            </option>
-        </select>
+    <div class="col-6">
+        <div class="surface-card shadow-2 p-3 border-round">
+            <div>
+                <span class="block text-500 font-medium mb-3">Status realizacji</span>
+                <div class="text-900 font-medium text-xl">
+                    <Dropdown v-model="selectedValue"
+                              @change="handleSelect"
+                              :options="orderStatuses"
+                              optionLabel="name"
+                              optionValue="value" />
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 

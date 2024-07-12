@@ -7,9 +7,7 @@
 @endpush
 
 @section('content')
-    <div class="">
-        <Dashboard></Dashboard>
-    </div>
+    <Dashboard></Dashboard>
 @endsection
 
 @push('page-scripts')

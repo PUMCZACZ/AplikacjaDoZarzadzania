@@ -7,21 +7,20 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
-{{--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">--}}
-{{--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">--}}
 
     @stack('page-css')
 
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
-    @include('layouts.navigation')
     <main>
         <div id="app">
-{{--            <x-toast/>--}}
-            @yield('content')
+            <app-layout>
+                <x-toast/>
+                @yield('content')
 
-            @stack('body-lower')
+                @stack('body-lower')
+            </app-layout>
         </div>
     </main>
     @stack('page-scripts')
