@@ -13,7 +13,6 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth', 'web'])->group(function () {
-
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

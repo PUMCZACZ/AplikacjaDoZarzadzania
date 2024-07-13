@@ -4,9 +4,18 @@ import { ref, computed } from 'vue';
 import AppConfig from '@sakai/layout/AppConfig.vue';
 
 const { layoutConfig } = useLayout();
+const redirectRoute = '/dashboard';
+
 const email = ref();
 const password = ref();
 const csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+
+const errors = ref();
+
+const props = defineProps({
+    form_route: String,
+});
+
 
 function sendLoginForm() {
     axios.post(props.form_route, {
@@ -14,16 +23,13 @@ function sendLoginForm() {
         password: password._value,
         _token: csrf,
     }).then(res => {
-        console.log(res)
+        window.location.href = redirectRoute;
     }).catch(res => {
-        console.log('failed');
-    })
+        errors.value = res.response.data.errors;
+    });
 }
 
 
-const props = defineProps({
-    form_route: String,
-})
 </script>
 
 <template>
@@ -38,19 +44,16 @@ const props = defineProps({
                     <div>
                         <form :action="form_route" method="POST">
                             <input type="hidden" name="_token" :value="csrf" />
-                            <label for="email" class="block text-900 text-xl font-medium mb-2">Email</label>
-                            <InputText id="email" v-model="email" type="text" placeholder="Email address" class="w-full md:w-30rem mb-5" style="padding: 1rem" />
+
+                                <label for="email" class="block text-900 text-xl font-medium mb-2">Email</label>
+                                <InputText id="email" v-model="email" type="text" placeholder="Email address" class="w-full md:w-30rem mb-3" style="padding: 1rem" />
+                                <p v-if="errors?.email" class="text-red-500 mb-2">{{ errors.email[0] }}</p>
+
 
                             <label for="password" class="block text-900 font-medium text-xl mb-2">Password</label>
                             <Password id="password" v-model="password" placeholder="Password" class="w-full mb-3" inputClass="w-full" :inputStyle="{ padding: '1rem' }"></Password>
+                            <p v-if="errors?.password" class="text-red-500">{{ errors.password[0] }}</p>
 
-<!--                            <div class="flex align-items-center justify-content-between mb-5 gap-5">-->
-<!--                                <div class="flex align-items-center">-->
-<!--                                    <Checkbox v-model="checked" id="rememberme1" binary class="mr-2"></Checkbox>-->
-<!--                                    <label for="rememberme1">Remember me</label>-->
-<!--                                </div>-->
-<!--                                <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(&#45;&#45;primary-color)">Forgot password?</a>-->
-<!--                            </div>-->
                             <Button @click="sendLoginForm()" label="Sign In" class="w-full p-3 text-xl"></Button>
                         </form>
                     </div>

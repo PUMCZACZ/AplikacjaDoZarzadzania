@@ -11,7 +11,7 @@
     </head>
     <body>
         <div id="app">
-            <Login form_route="{{ route('login.store')}}"></Login>
+            {{ $slot }}
         </div>
     </body>
 </html>
