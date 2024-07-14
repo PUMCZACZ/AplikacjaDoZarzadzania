@@ -1,5 +1,6 @@
 <script setup>
-import {ref} from "vue";
+import {ref, watch} from "vue";
+import moment from "moment/moment.js";
 
 const props = defineProps({
     label: String,
@@ -8,9 +9,9 @@ const props = defineProps({
 const date = ref(new Date().toLocaleDateString('en-ca'));
 
 const emits = defineEmits(['changeDate']);
-
 const changeDate = (event) => {
-    emits('changeDate', event.target.value);
+    const formatedDate = moment(event).format('YYYY-MM-DD');
+    emits('changeDate', formatedDate);
 };
 </script>
 
@@ -20,7 +21,9 @@ const changeDate = (event) => {
             <div>
                 <span class="block text-500 font-medium mb-3">{{ label }}</span>
                 <div class="text-900 font-medium text-xl">
-                    <Calendar v-model="date" @change="changeDate" dateFormat="yy/mm/dd"/>
+                    <Calendar v-model="date"
+                              @dateSelect="changeDate"
+                              dateFormat="yy/mm/dd" />
                 </div>
             </div>
         </div>

@@ -59,6 +59,8 @@ const fetchOrders = () => {
             emits('emitOrderMeta', res.data.meta)
         })
         .catch(error => console.log(error))
+
+    console.log(orders.value)
 }
 
 onMounted(() => fetchOrders());
@@ -71,10 +73,6 @@ onMounted(() => fetchOrders());
         <DatePicker label="Do" @changeDate="handleChangeDateTo"/>
         <OrderStatusSelect @changeOrderStatusSelect="handleOrderStatusSelectChange" />
         <OrderDeliveryMethodSelect :deliveryMethods="deliveryMethods" @changeOrderDeliveryMethodSelect="handleOrderDeliverySelectChange"/>
-    </div>
-    <div class="mb-4">
-
-
     </div>
 
     <DataTable v-model:filters="filters" :value="orders.data"

@@ -1,7 +1,7 @@
 <script setup>
 const props = defineProps({
     title: String,
-    demand: Number,
+    demand: String,
     icon_color: String,
     bg_color: String
 })

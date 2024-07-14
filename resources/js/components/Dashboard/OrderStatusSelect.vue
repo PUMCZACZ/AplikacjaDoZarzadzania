@@ -12,7 +12,7 @@ const orderStatuses = ref([
 const emits = defineEmits(['changeOrderStatusSelect']);
 
 const handleSelect = (event) => {
-    emits('changeOrderStatusSelect', event.target.value);
+    emits('changeOrderStatusSelect', event.value);
 };
 </script>
 
