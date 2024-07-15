@@ -5,6 +5,7 @@ namespace App\Domains\Dashboard\Controllers\Api;
 use App\Domains\Order\Enums\OrderDeliveryMethodEnum;
 use App\Domains\Order\Enums\OrderTypeEnum;
 use App\Domains\Order\Repository\OrderDemandRepository;
+use App\Domains\Order\Transformers\OrderDeliveryMethod;
 use App\Domains\Order\Transformers\OrderTypeTransformer;
 use App\Http\Controllers\Controller;
 use App\Http\JsonSerializer;
@@ -24,7 +25,11 @@ class DashboardController extends Controller
             ->serializeWith(new JsonSerializer())
             ->toArray();
 
-        $deliveryMethods = OrderDeliveryMethodEnum::toArray();
+        $deliveryMethods = fractal()->collection(OrderDeliveryMethodEnum::cases())
+            ->transformWith(new OrderDeliveryMethod())
+            ->serializeWith(new JsonSerializer())
+            ->toArray();
+
 
         return response()->json([
             'demands' => $demands,
