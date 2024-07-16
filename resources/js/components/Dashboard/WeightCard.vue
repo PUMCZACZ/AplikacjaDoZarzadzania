@@ -1,21 +1,25 @@
 <script setup>
+import Card from 'primevue/card';
 const props = defineProps({
     value: Number,
 })
 </script>
 
 <template>
-    <div class="card mt-2 shadow-lg p-3 mb-5 bg-body rounded flex-fill">
-        <div class="card-header shadow d-flex align-items-center p-3 bg-body rounded">
-            <i class="bi bi-box-seam text-danger me-2 fs-3"></i>
-            Suma ze wszystkich zamówień
-        </div>
-        <div class="card-body d-flex justify-content-center align-items-center">
-            <p class="fs-1" style="font-size:2rem;">{{ value }} kg</p>
-        </div>
+    <div class="col-12 sm:col-6">
+        <Card>
+            <template #header>
+                <h3 class="pt-4 m-0 text-center">Suma ze wszystkich zamówień</h3>
+            </template>
+            <template #content>
+                <p class="text-center">{{ value }} kg</p>
+            </template>
+        </Card>
     </div>
 </template>
 
 <style scoped>
-
+    p {
+        font-size: 2rem;
+    }
 </style>

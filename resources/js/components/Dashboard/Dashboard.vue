@@ -36,11 +36,10 @@ onMounted(() => {
 <template>
     <div class="grid">
         <DemandCards v-if="dataLoaded" />
-
         <ExportCard v-if="dataLoaded" @emitOrderMeta="handleAssignOrderMeta" />
     </div>
 
-    <div class="d-flex-column d-sm-flex gap-sm-2 justify-content-between">
+    <div class="grid">
         <WeightCard v-if="dataLoaded" :value="meta.sumKg" />
         <SumPriceCard v-if="dataLoaded" :value="meta.sumPrice" />
     </div>

@@ -5,7 +5,6 @@ import { reactive, onMounted, ref, inject } from 'vue';
 import OrderDeliveryMethodSelect from "./Dashboard/OrderDeliveryMethodSelect.vue";
 import DatePicker from "./Dashboard/DatePicker.vue";
 import { FilterMatchMode } from 'primevue/api';
-import Calendar from "primevue/calendar";
 
 const orders = ref({
     data: [],
@@ -51,20 +50,16 @@ const handleChangeDateTo = (value) => {
     fetchOrders();
 }
 
-const fetchOrders = () => {
-    axios.post('api/dashboard/orders', params,)
+async function fetchOrders() {
+    await axios.post('api/dashboard/orders', params)
         .then(res => {
             orders.value.data = res.data.data;
-            orders.value.meta = res.data.meta;
             emits('emitOrderMeta', res.data.meta)
         })
         .catch(error => console.log(error))
-
-    console.log(orders.value)
 }
 
 onMounted(() => fetchOrders());
-
 </script>
 
 <template>
@@ -79,11 +74,9 @@ onMounted(() => fetchOrders());
                :globalFilterFields="['client', 'order_name', 'order_type', 'quantity', 'price', 'deadline']"
                :pt="{table: 'table table-striped'}">
         <template #header>
-            <div class="d-flex justify-content-end">
+            <div class="flex justify-content-end">
                 <IconField iconPosition="left">
-                    <InputIcon>
-                        <i class="pi pi-search" />
-                    </InputIcon>
+                    <InputIcon class="pi pi-search"> </InputIcon>
                     <InputText v-model="filters['global'].value" placeholder="Wyszukaj w tabeli" />
                 </IconField>
             </div>
@@ -91,7 +84,7 @@ onMounted(() => fetchOrders());
 
       <Column field="id" header="Id" sortable></Column>
       <Column field="client" header="Klient" sortable></Column>
-      <Column field="order_name" header="Nazwa Zamówienia"sortable></Column>
+      <Column field="order_name" header="Nazwa Zamówienia" sortable></Column>
       <Column field="order_type" header="Typ Zamówienia" sortable></Column>
       <Column field="quantity" header="Ilość" sortable></Column>
       <Column field="price" header="Cena" sortable></Column>
