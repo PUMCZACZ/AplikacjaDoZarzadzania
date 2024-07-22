@@ -17,7 +17,7 @@ const handleSelect = (event) => {
 </script>
 
 <template>
-    <div class="col-6">
+    <div class="col-12 sm:col-6">
         <div class="surface-card shadow-2 p-3 border-round">
             <div>
                 <span class="block text-500 font-medium mb-3">Status realizacji</span>
