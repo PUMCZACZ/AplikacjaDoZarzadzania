@@ -15,7 +15,9 @@ use Illuminate\Support\Carbon;
  * @property string first_name
  * @property string last_name
  * @property string city
- * @property int phone_number
+ * @property string street
+ * @property string post_code
+ * @property string phone_number
  * @property Carbon created_at
  * @property Carbon updated_at
  * @property-read Order $order
@@ -38,5 +40,10 @@ class Client extends Model
     public function fullName(): string
     {
         return $this->first_name . ' ' . $this->last_name;
+    }
+
+    public function fullAddress(): string
+    {
+        return $this->city . ' ' . $this->street . ' ' .$this->post_code;
     }
 }

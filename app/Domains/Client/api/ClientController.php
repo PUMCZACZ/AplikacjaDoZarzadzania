@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Client\Controllers;
+namespace App\Domains\Client\api;
 
 use App\Domains\Client\Models\Client;
 use App\Domains\Client\Requests\ClientRequest;

@@ -24,3 +24,7 @@ Route::prefix('dashboard')->name('dashboard.')->group(function () {
     Route::get('/data', [\App\Domains\Dashboard\Controllers\Api\DashboardController::class, 'data'])->name('get.data');
 });
 
+Route::prefix('client')->name('client.')->group(function() {
+    Route::delete('/{client}', [])->name('delete');
+});
+

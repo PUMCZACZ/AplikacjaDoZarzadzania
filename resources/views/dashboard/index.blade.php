@@ -7,7 +7,7 @@
 @endpush
 
 @section('content')
-    <Dashboard></Dashboard>
+    <Dashboard/>
 @endsection
 
 @push('page-scripts')

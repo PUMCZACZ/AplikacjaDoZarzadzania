@@ -1,6 +1,6 @@
 <script setup>
 import Dropdown from 'primevue/dropdown';
-import {ref, inject} from "vue";
+import {ref} from "vue";
 
 const selectedValue = ref('no realised');
 
